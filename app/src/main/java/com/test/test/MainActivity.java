@@ -43,7 +43,11 @@ public class MainActivity extends AppCompatActivity {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
                 //启动导入通讯录界面
+<<<<<<< HEAD
                 WelcomeActivity.startActivity(getInstance());
+=======
+//                WelcomeActivity.startActivity(getInstance());
+>>>>>>> origin/master
                 //暂定导入通讯录
                 ContactsHelper.fetchAllContacts(getInstance());
                 ContactsHelper.removeDuplicate(dataList);
