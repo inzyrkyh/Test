@@ -1,0 +1,35 @@
+package com.test.test.Model;
+
+/**
+ * Created by MiJiefei on 2015/10/28.
+ */
+public class Card {
+    private String name;
+    private String phoneNumber;
+
+    public Card(String name, String phoneNumber) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        boolean sameSame = false;
+
+        if (object != null && object instanceof Card)
+        {
+            if (this.name.equals(((Card) object).name) && this.phoneNumber.equals(((Card) object).phoneNumber)) {
+                sameSame = true;
+            }
+        }
+        return sameSame;
+    }
+}
