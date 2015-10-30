@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_welcome">通讯簿空空如也～\n快将朋友都叫进来吧！</string>
+    <string name="button_import_from_contact">从通讯簿导入</string>
+    <string name="button_import_from_cloud">从云端导入</string>
+</resources>

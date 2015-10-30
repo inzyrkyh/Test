@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="import_finished">导入完成，备份至云端资料永不丢失</string>
+    <string name="button_backup_on_cloud">去云端备份</string>
+    <string name="button_cancel">取消</string>
+</resources>
