@@ -1,14 +1,14 @@
 package com.test.test;
 
 import android.app.Activity;
-import android.content.Context;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.test.test.Model.Card;
@@ -18,7 +18,7 @@ import com.test.test.Model.ContactsHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static List<Card> dataList = new ArrayList<Card>();
 
@@ -26,13 +26,16 @@ public class MainActivity extends AppCompatActivity {
 
     ListView lv;
 
+    ImageButton ib_all_calls;
+    ImageButton ib_recent_calls;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
         final CardAdapter adapter = new CardAdapter(this, R.layout.card_item, dataList);
 
@@ -42,8 +45,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
-                //启动导入通讯录界面
-                WelcomeActivity.startActivity(getInstance());
                 //暂定导入通讯录
                 ContactsHelper.fetchAllContacts(getInstance());
                 ContactsHelper.removeDuplicate(dataList);
@@ -51,13 +52,48 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        lv = (ListView) findViewById(R.id.listViewNameCard);
+        fab.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                //启动导入通讯录界面
+//                WelcomeFragment.startActivity(getInstance());
+                Fragment newFragment = new WelcomeFragment();
+                FragmentTransaction transaction =getFragmentManager().beginTransaction();
+                transaction.add(R.id.fragment_list, newFragment);
+                transaction.commit();
+                return false;
+            }
+        });
 
-        //从数据库获取联系人列表/名片列表
-        if (lv.getCount() <= 0) {
-            WelcomeActivity.startActivity(this);
-        }
-        lv.setAdapter(adapter);
+        ImageButton ib_gongneng = (ImageButton) findViewById(R.id.button_gongneng);
+        final ImageButton ib_all_people = (ImageButton) findViewById(R.id.button_all_people);
+        ImageButton ib_search = (ImageButton) findViewById(R.id.button_search);
+        ImageButton ib_edit = (ImageButton) findViewById(R.id.button_edit);
+        EditText editText_searchBar = (EditText) findViewById(R.id.editTextSearchBar);
+        ib_all_calls = (ImageButton) findViewById(R.id.button_all_calls);
+        ib_all_calls.setSelected(true);
+        ib_recent_calls = (ImageButton) findViewById(R.id.button_recent_calls);
+
+        ib_all_calls.setOnClickListener(this);
+        ib_recent_calls.setOnClickListener(this);
+
+//        editText_searchBar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (!hasFocus) {
+//                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+//                }
+//            }
+//        });
+
+//        lv = (ListView) findViewById(R.id.listViewNameCard);
+//
+//        //从数据库获取联系人列表/名片列表
+//        if (lv.getCount() <= 0) {
+//            WelcomeFragment.startActivity(this);
+//        }
+//        lv.setAdapter(adapter);
     }
 
     public static Activity getInstance() {
@@ -67,5 +103,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.button_all_calls:
+                ib_all_calls.setSelected(true);
+                ib_recent_calls.setSelected(false);
+                break;
+            case R.id.button_recent_calls:
+                ib_all_calls.setSelected(false);
+                ib_recent_calls.setSelected(true);
+                break;
+        }
     }
 }

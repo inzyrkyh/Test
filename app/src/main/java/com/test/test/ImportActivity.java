@@ -28,30 +28,30 @@ public class ImportActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.import_layout);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        layout_import_complete = (LinearLayout) findViewById(R.id.layout_import_complete);
+//        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+//        layout_import_complete = (LinearLayout) findViewById(R.id.layout_import_complete);
 //        ContactsHelper.fetchAllContacts(this);
-        progressBar.setVisibility(View.GONE);
-        layout_import_complete.setVisibility(View.VISIBLE);
-        button_backup_on_cloud = (Button) findViewById(R.id.button_backup_on_cloud);
-        button_cancel = (Button) findViewById(R.id.button_cancel);
-        button_backup_on_cloud.setOnClickListener(this);
-        button_cancel.setOnClickListener(this);
+//        progressBar.setVisibility(View.GONE);
+//        layout_import_complete.setVisibility(View.VISIBLE);
+//        button_backup_on_cloud = (Button) findViewById(R.id.button_backup_on_cloud);
+//        button_cancel = (Button) findViewById(R.id.button_cancel);
+//        button_backup_on_cloud.setOnClickListener(this);
+//        button_cancel.setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.button_backup_on_cloud:
-                //去云端备份逻辑
-                Toast.makeText(this, "云端备份", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.button_cancel:
-                //取消逻辑
-                LoginActivity.startActivity(this);
-                break;
-        }
+//        switch (v.getId()) {
+//            case R.id.button_backup_on_cloud:
+//                //去云端备份逻辑
+//                Toast.makeText(this, "云端备份", Toast.LENGTH_SHORT).show();
+//                break;
+//            case R.id.button_cancel:
+//                //取消逻辑
+//                LoginActivity.startActivity(this);
+//                break;
+//        }
     }
 
     @Override
