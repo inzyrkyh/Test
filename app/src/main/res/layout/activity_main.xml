@@ -4,18 +4,127 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:fitsSystemWindows="true"
-    tools:context="com.test.test.MainActivity">
+    tools:context="com.test.test.MainActivity"
+    android:background="@drawable/i_beijing">
 
-    <android.support.design.widget.AppBarLayout android:layout_height="wrap_content"
-        android:layout_width="match_parent" android:theme="@style/AppTheme.AppBarOverlay">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:paddingTop="10dp"
+        android:orientation="horizontal">
 
-        <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
-            android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary" app:popupTheme="@style/AppTheme.PopupOverlay" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:id="@+id/relative_layout_1">
 
-    </android.support.design.widget.AppBarLayout>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:paddingTop="5dp"
+                android:paddingLeft="20dp"
+                android:src="@drawable/b_gongneng"
+                android:id="@+id/button_gongneng"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:adjustViewBounds="true"
+                android:layout_marginLeft="0dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="0dp" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:scaleType="fitStart"
+                android:paddingTop="5dp"
+                android:src="@drawable/b_suoyouren"
+                android:id="@+id/button_all_people"
+                android:adjustViewBounds="true"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/button_gongneng"
+                />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:singleLine="true"
+                android:background="@drawable/myedittext_textfield_activated_holo_light"
+                android:layout_toRightOf="@+id/button_all_people"
+                android:layout_toLeftOf="@+id/button_search"
+                android:id="@+id/editTextSearchBar"
+                android:hint="Search..."
+                android:textSize="16sp"
+                android:textAlignment="gravity"
+                android:gravity="bottom"
+                android:layout_alignBaseline="@+id/button_gongneng" />
 
-    <include layout="@layout/content_main" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:scaleType="centerInside"
+                android:src="@drawable/b_sousuo"
+                android:id="@+id/button_search"
+                android:adjustViewBounds="true"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/button_edit" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:paddingRight="20dp"
+                android:src="@drawable/b_bianji"
+                android:id="@+id/button_edit"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:scaleType="centerInside"
+                android:contentDescription="button edit"
+                android:adjustViewBounds="true"
+                />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:paddingTop="5dp"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:layout_below="@+id/relative_layout_1"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/calls_layout">
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/button_selector"
+                android:id="@+id/button_all_calls" />
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/button_selector"
+                android:id="@+id/button_recent_calls" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@id/calls_layout"
+            android:paddingTop="5dp"
+            android:id="@+id/fragment_list"></FrameLayout>
+
+    </RelativeLayout>
+
+    <!--<include layout="@layout/content_main" />-->
 
     <android.support.design.widget.FloatingActionButton android:id="@+id/fab"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
