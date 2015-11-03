@@ -97,8 +97,8 @@ public class ImportingFragment extends Fragment implements View.OnClickListener 
                 Fragment newFragment = new CardListFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.hide(this);
-                transaction.add(R.id.fragment_list, newFragment);
-                transaction.addToBackStack(null);
+                transaction.replace(R.id.fragment_list, newFragment);
+//                transaction.addToBackStack(null);
                 transaction.commit();
                 getFragmentManager().executePendingTransactions();
                 break;
