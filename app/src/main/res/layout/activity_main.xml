@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:fitsSystemWindows="true"
     tools:context="com.test.test.MainActivity"
-    android:background="@drawable/i_beijing">
+    android:background="@drawable/i_beijing"
+    android:id="@+id/id_drawerLayout">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -121,8 +122,33 @@
             android:layout_below="@id/calls_layout"
             android:paddingTop="5dp"
             android:id="@+id/fragment_list"></FrameLayout>
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@id/calls_layout"
+            android:paddingTop="5dp"
+            android:id="@+id/fragment_importing"></FrameLayout>
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@id/calls_layout"
+            android:paddingTop="5dp"
+            android:id="@+id/fragment_progress"></FrameLayout>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/create_card"></FrameLayout>
 
     </RelativeLayout>
+
+    <fragment
+        android:id="@+id/id_left"
+        android:name="com.xiaoniao.bai.mingpianjia.left"
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:tag="LEFT"
+        tools:layout="@layout/left" />
 
     <!--<include layout="@layout/content_main" />-->
 
@@ -131,4 +157,4 @@
         android:layout_gravity="bottom|end" android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_dialog_email" />
 
-</android.support.design.widget.CoordinatorLayout>
+</android.support.v4.widget.DrawerLayout>

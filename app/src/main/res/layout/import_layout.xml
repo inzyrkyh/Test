@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:background="@android:color/transparent"
     android:id="@+id/importing_layout">
@@ -9,14 +9,63 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/p_jindutiao001"
-        android:layout_gravity="center"></ImageView>
+        android:layout_gravity="center"
+        android:id="@+id/imageViewProgressbar"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="140dp" />
 
     <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/progress_importing"
+        android:layout_gravity="center"
+        android:background="@drawable/p_jindutiao002"
+        android:indeterminate="false"
+        android:layout_above="@+id/button_backup_on_cloud"
+        android:layout_marginBottom="30dp"
+        android:layout_centerHorizontal="true" />
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/p_jindutiao002"
-        android:layout_gravity="center"
-        android:progress="10"
-        android:id="@+id/progress_importing"/>
+        android:textSize="16sp"
+        android:id="@+id/textViewProgress"
+        android:layout_toRightOf="@+id/progress_importing"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/progress_importing" />
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="导入成功"
+        android:textColor="#ffffff"
+        android:textSize="30sp"
+        android:visibility="invisible"
+        android:id="@+id/textViewImportComplete"
+        android:layout_above="@+id/progress_importing"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        />
 
-</FrameLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_backup_on_cloud"
+        android:layout_below="@+id/imageViewProgressbar"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/b_anniu"
+        android:text="@string/button_backup_on_cloud"
+        android:visibility="invisible"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_close"
+        android:layout_below="@+id/button_backup_on_cloud"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/b_anniu"
+        android:text="@string/button_close"
+        android:visibility="invisible"/>
+</RelativeLayout>

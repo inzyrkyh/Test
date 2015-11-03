@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.fortysevendeg.swipelistview.SwipeListView;
+//import com.fortysevendeg.swipelistview.SwipeListView;
 
 public class LoginActivity extends Activity implements View.OnClickListener {
 

@@ -11,9 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.test.test.Model.ContactsHelper;
-import com.test.test.Model.ImportingFragment;
-
 public class WelcomeFragment extends Fragment implements View.OnClickListener {
     private Button button_import_from_contacts;
     private Button button_import_from_cloud;
@@ -43,10 +40,12 @@ public class WelcomeFragment extends Fragment implements View.OnClickListener {
 //                setContentView(R.layout.import_layout);
 //                ImportActivity.startActivity(this.getActivity());
                 Fragment newFragment = new ImportingFragment();
-                FragmentTransaction transaction =getFragmentManager().beginTransaction();
-                transaction.add(R.id.fragment_list, newFragment);
-//                transaction.addToBackStack(null);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.hide(this);
+                transaction.add(R.id.fragment_progress, newFragment);
+                transaction.addToBackStack(null);
                 transaction.commit();
+                getFragmentManager().executePendingTransactions();
                 break;
             case R.id.button_import_from_cloud:
                 //TODO: 从云端导入逻辑

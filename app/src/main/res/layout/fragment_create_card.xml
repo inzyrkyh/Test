@@ -1,0 +1,102 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="com.test.test.CreateCardFragment"
+    android:clickable="true"
+    >
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:layout_alignParentTop="true"
+        android:background="#80000000"/>
+    <ImageView
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:src="@drawable/b_tianjiazhaopian"
+        android:layout_alignTop="@+id/imageViewCardFrame"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+         />
+    <ImageView
+        android:id="@+id/imageViewCardFrame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/i_diban02"
+        android:adjustViewBounds="true"
+        android:layout_marginTop="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/card_name"
+        android:textSize="20sp"
+        android:layout_alignTop="@id/imageViewCardFrame"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="5dp"
+        />
+    <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:singleLine="true"
+        android:layout_alignBaseline="@id/textViewName"
+        android:layout_alignRight="@+id/imageViewCardFrame"
+        android:layout_toRightOf="@id/textViewName"
+        android:layout_marginRight="20dp"
+        />
+    <TextView
+        android:id="@+id/textViewPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/card_phone"
+        android:textSize="20sp"
+        android:layout_below="@id/textViewName"
+        android:layout_alignLeft="@id/textViewName"
+        android:layout_marginTop="10dp"
+        />
+    <EditText
+        android:id="@+id/editTextPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:singleLine="true"
+        android:layout_toRightOf="@id/textViewPhone"
+        android:layout_alignBaseline="@id/textViewPhone"
+        android:layout_alignRight="@id/editTextName"
+        android:inputType="phone"
+        />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:layout_centerVertical="true"
+        android:layout_below="@id/imageViewCardFrame"
+        android:layout_marginTop="10dp"
+        >
+
+        <Button
+            android:id="@+id/button_create"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/button_create"
+            android:background="@drawable/b_anniu"
+            android:layout_marginLeft="30dp"/>
+
+        <Button
+            android:id="@+id/button_close"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/button_close"
+            android:background="@drawable/b_anniu"
+            android:layout_marginRight="30dp"/>
+    </LinearLayout>
+</RelativeLayout>

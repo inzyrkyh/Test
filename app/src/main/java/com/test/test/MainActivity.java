@@ -3,9 +3,12 @@ package com.test.test;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -18,13 +21,14 @@ import com.test.test.Model.ContactsHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, CreateCardFragment.OnFragmentInteractionListener {
 
     public static List<Card> dataList = new ArrayList<Card>();
 
     static Activity context;
 
-    ListView lv;
+    public static ListView lv;
+    public static CardAdapter adapter;
 
     ImageButton ib_all_calls;
     ImageButton ib_recent_calls;
@@ -37,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
 
-        final CardAdapter adapter = new CardAdapter(this, R.layout.card_item, dataList);
+        adapter = new CardAdapter(this, R.layout.card_item, dataList);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +63,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                WelcomeFragment.startActivity(getInstance());
                 Fragment newFragment = new WelcomeFragment();
                 FragmentTransaction transaction =getFragmentManager().beginTransaction();
-                transaction.add(R.id.fragment_list, newFragment);
+                transaction.add(R.id.fragment_importing,newFragment);
+                transaction.addToBackStack(null);
                 transaction.commit();
                 return false;
             }
@@ -76,7 +81,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         ib_all_calls.setOnClickListener(this);
         ib_recent_calls.setOnClickListener(this);
-
+        ib_gongneng.setOnClickListener(this);
+        ib_search.setOnClickListener(this);
+        ib_edit.setOnClickListener(this);
 //        editText_searchBar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 //            @Override
 //            public void onFocusChange(View v, boolean hasFocus) {
@@ -116,6 +123,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ib_all_calls.setSelected(false);
                 ib_recent_calls.setSelected(true);
                 break;
+            case R.id.button_gongneng:
+                ((DrawerLayout) findViewById(R.id.id_drawerLayout)).openDrawer(Gravity.LEFT);
+                break;
         }
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
