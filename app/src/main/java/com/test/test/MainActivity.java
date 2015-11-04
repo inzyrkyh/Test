@@ -18,6 +18,7 @@ import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
@@ -188,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onDrawerSlide(final View drawerView, final float slideOffset) {
-        Log.d("drawerView", drawerView.getId() + "");
+//        Log.d("drawerView", drawerView.getId() + "");
         MainActivity.blurView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
@@ -202,6 +203,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
             }
         });
+        if (slideOffset == 0) {
+//            Log.d("drawerView", drawerView.getId()+","+slideOffset);
+            blurCover.setBackgroundResource(0);
+            blurView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -211,13 +217,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onDrawerClosed(View drawerView) {
-        Log.d("drawerView", drawerView.getId() + "closed");
+//        Log.d("drawerView", drawerView.getId() + "closed");
         blurCover.setBackgroundResource(0);
         blurView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onDrawerStateChanged(int newState) {
-        Log.d("drawerView", newState + "");
+//        Log.d("drawerView", newState + "");
     }
+
 }
