@@ -5,4 +5,5 @@ package com.test.test;
  */
 public class FragmentTags {
     public static final String FRAGMENT_CREATE_CARD = "FRAGMENT_CREATE_CARD";
+    public static final String FRAGMENT_CREATE_CARDLIST = "FRAGMENT_CREATE_CARDLIST";
 }

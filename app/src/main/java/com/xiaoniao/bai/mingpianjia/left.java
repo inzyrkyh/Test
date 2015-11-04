@@ -2,6 +2,8 @@ package com.xiaoniao.bai.mingpianjia;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -9,6 +11,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -16,6 +19,7 @@ import android.widget.ListView;
 import com.test.test.CardListFragment;
 import com.test.test.CreateCardFragment;
 import com.test.test.FragmentTags;
+import com.test.test.MainActivity;
 import com.test.test.R;
 
 public class left extends Fragment implements AdapterView.OnItemClickListener
@@ -52,6 +56,7 @@ public class left extends Fragment implements AdapterView.OnItemClickListener
 
                     @Override
                     public void onDrawerClosed(View drawerView) {
+                        Log.d("1", "onDrawerOpened left");
                         Fragment newFragment = new CreateCardFragment();
                         FragmentTransaction transaction = getFragmentManager().beginTransaction();
                         transaction.replace(R.id.create_card, newFragment, FragmentTags.FRAGMENT_CREATE_CARD);
@@ -60,6 +65,7 @@ public class left extends Fragment implements AdapterView.OnItemClickListener
 //                getFragmentManager().executePendingTransactions();
                         ((DrawerLayout) getActivity().findViewById(R.id.id_drawerLayout)).setDrawerListener(null);
                         ((DrawerLayout) getActivity().findViewById(R.id.id_drawerLayout)).setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                        ((DrawerLayout) getActivity().findViewById(R.id.id_drawerLayout)).setDrawerListener((DrawerLayout.DrawerListener) MainActivity.getInstance());
                     }
 
                     @Override

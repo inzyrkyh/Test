@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.daimajia.androidviewhover.BlurLayout;
 import com.test.test.Model.Card;
 
 
@@ -130,6 +131,13 @@ public class CreateCardFragment extends Fragment implements View.OnClickListener
                     card = new Card(editTextName.getText().toString(), editTextPhone.getText().toString());
                     if (card != null) {
                         MainActivity.dataList.add(card);
+                        Toast.makeText(MainActivity.getInstance(), "创建成功", Toast.LENGTH_SHORT).show();
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.hide(getFragmentManager().findFragmentByTag(FragmentTags.FRAGMENT_CREATE_CARD)).commit();
+                        ((DrawerLayout) getActivity().findViewById(R.id.id_drawerLayout)).setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                        //refresh datalist
+                        CardListFragment.createCardListFragmentFrom(this);
+                        MainActivity.adapter.notifyDataSetChanged();
                     }
                 }
                 break;

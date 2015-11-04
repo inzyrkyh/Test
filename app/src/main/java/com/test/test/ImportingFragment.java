@@ -94,13 +94,14 @@ public class ImportingFragment extends Fragment implements View.OnClickListener 
                 break;
             case R.id.button_close:
                 Log.d("1", "button close");
-                Fragment newFragment = new CardListFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.hide(this);
-                transaction.replace(R.id.fragment_list, newFragment);
-//                transaction.addToBackStack(null);
-                transaction.commit();
-                getFragmentManager().executePendingTransactions();
+                CardListFragment.createCardListFragmentFrom(this);
+//                Fragment newFragment = new CardListFragment();
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                transaction.hide(this);
+//                transaction.replace(R.id.fragment_list, newFragment);
+////                transaction.addToBackStack(null);
+//                transaction.commit();
+//                getFragmentManager().executePendingTransactions();
                 break;
         }
     }
