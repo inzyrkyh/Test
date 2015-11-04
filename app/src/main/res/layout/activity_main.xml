@@ -12,7 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:paddingTop="10dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/blur_layout"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -140,6 +142,12 @@
             android:id="@+id/create_card"></FrameLayout>
 
     </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/blur_cover"
+        />
 
     <fragment
         android:id="@+id/id_left"
