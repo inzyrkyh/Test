@@ -12,12 +12,12 @@
         android:layout_alignParentTop="true"
         android:background="#80000000"/>
     <ImageView
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:src="@drawable/b_tianjiazhaopian"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_alignTop="@+id/imageViewCardFrame"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:scaleType="center"
          />
     <ImageView
         android:id="@+id/imageViewCardFrame"
@@ -37,6 +37,7 @@
         android:layout_alignTop="@id/imageViewCardFrame"
         android:layout_marginLeft="100dp"
         android:layout_marginTop="5dp"
+        android:textColor="#FFFFFF"
         />
     <EditText
         android:id="@+id/editTextName"
@@ -48,6 +49,7 @@
         android:layout_alignRight="@+id/imageViewCardFrame"
         android:layout_toRightOf="@id/textViewName"
         android:layout_marginRight="20dp"
+        android:background="@drawable/myedittext_textfield_activated_holo_light"
         />
     <TextView
         android:id="@+id/textViewPhone"
@@ -58,6 +60,7 @@
         android:layout_below="@id/textViewName"
         android:layout_alignLeft="@id/textViewName"
         android:layout_marginTop="10dp"
+        android:textColor="#FFFFFF"
         />
     <EditText
         android:id="@+id/editTextPhone"
@@ -69,6 +72,7 @@
         android:layout_alignBaseline="@id/textViewPhone"
         android:layout_alignRight="@id/editTextName"
         android:inputType="phone"
+        android:background="@drawable/myedittext_textfield_activated_holo_light"
         />
 
     <LinearLayout
