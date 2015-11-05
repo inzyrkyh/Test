@@ -32,7 +32,7 @@ import com.test.test.Model.ContactsHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, CreateCardFragment.OnFragmentInteractionListener, DrawerLayout.DrawerListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, CreateCardFragment.OnFragmentInteractionListener, DrawerLayout.DrawerListener, View.OnTouchListener {
 
     public static List<Card> dataList = new ArrayList<Card>();
 
@@ -79,8 +79,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                WelcomeFragment.startActivity(getInstance());
                 Fragment newFragment = new WelcomeFragment();
                 FragmentTransaction transaction =getFragmentManager().beginTransaction();
-                transaction.add(R.id.fragment_importing,newFragment);
-                transaction.addToBackStack(null);
+                transaction.replace(R.id.fragment_importing,newFragment);
+//                transaction.addToBackStack(null);
                 transaction.commit();
                 return false;
             }
@@ -97,7 +97,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ib_recent_calls = (ImageButton) findViewById(R.id.button_recent_calls);
 
         ib_all_calls.setOnClickListener(this);
+        ib_all_calls.setOnTouchListener(this);
         ib_recent_calls.setOnClickListener(this);
+        ib_recent_calls.setOnTouchListener(this);
         ib_gongneng.setOnClickListener(this);
         ib_search.setOnClickListener(this);
         ib_edit.setOnClickListener(this);
@@ -204,7 +206,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
         if (slideOffset == 0) {
-//            Log.d("drawerView", drawerView.getId()+","+slideOffset);
             blurCover.setBackgroundResource(0);
             blurView.setVisibility(View.VISIBLE);
         }
@@ -224,7 +225,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onDrawerStateChanged(int newState) {
-//        Log.d("drawerView", newState + "");
+        Log.d("drawerView", newState + "");
     }
 
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        switch (v.getId()) {
+            case R.id.button_all_calls:
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    ib_all_calls.setSelected(true);
+                    ib_recent_calls.setSelected(false);
+                }
+                break;
+            case R.id.button_recent_calls:
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    ib_all_calls.setSelected(false);
+                    ib_recent_calls.setSelected(true);
+                }
+                break;
+        }
+        return false;
+    }
 }

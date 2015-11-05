@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ public class ImportingFragment extends Fragment implements View.OnClickListener 
     TextView textViewImportSuccess;
     Button button_backup_on_cloud;
     Button button_close;
+    ImageView imageIndicate;
 
     private Handler mHandler = new Handler() {
 
@@ -56,9 +58,10 @@ public class ImportingFragment extends Fragment implements View.OnClickListener 
                 case MSG_IMPORT_OVER:
                     break;
                 case MSG_IMPORT_COMPLETE:
-                    textViewProgress.setText("100%");
+                    textViewProgress.setVisibility(View.INVISIBLE);
                     textViewImportSuccess.setVisibility(View.VISIBLE);
                     button_backup_on_cloud.setVisibility(View.VISIBLE);
+                    imageIndicate.setVisibility(View.VISIBLE);
                     button_close.setVisibility(View.VISIBLE);
                     mHandler.sendEmptyMessage(MSG_IMPORT_OVER);
                     break;
@@ -72,6 +75,7 @@ public class ImportingFragment extends Fragment implements View.OnClickListener 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.import_layout, container, false);
+        imageIndicate = (ImageView) view.findViewById(R.id.imageIndicate);
         progressBar = (ProgressBar) view.findViewById(R.id.progress_importing);
         textViewProgress = (TextView) view.findViewById(R.id.textViewProgress);
         textViewProgress.setText("0%");
