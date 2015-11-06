@@ -41,7 +41,7 @@ public class WelcomeFragment extends Fragment implements View.OnClickListener {
 //                ImportActivity.startActivity(this.getActivity());
                 Fragment newFragment = new ImportingFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.hide(this);
+                transaction.remove(this);
                 transaction.replace(R.id.fragment_progress, newFragment);
 //                transaction.addToBackStack(null);
                 transaction.commit();

@@ -26,7 +26,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.test.test.Model.Card;
-import com.test.test.Model.CardAdapter;
+import com.test.test.Model.CardListAdapter;
 import com.test.test.Model.ContactsHelper;
 
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     static AppCompatActivity context;
 
     public static ListView lv;
-    public static CardAdapter adapter;
+    public static CardListAdapter adapter;
 
     ImageButton ib_all_calls;
     ImageButton ib_recent_calls;
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
 
-        adapter = new CardAdapter(this, R.layout.card_item, dataList);
+        adapter = new CardListAdapter(this, R.layout.card_item, dataList);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -66,9 +66,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
                 //暂定导入通讯录
-                ContactsHelper.fetchAllContacts(getInstance());
-                ContactsHelper.removeDuplicate(dataList);
-                adapter.notifyDataSetChanged();
+//                ContactsHelper.fetchAllContacts(getInstance());
+//                ContactsHelper.removeDuplicate(dataList);
+//                adapter.notifyDataSetChanged();
             }
         });
 
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //启动导入通讯录界面
 //                WelcomeFragment.startActivity(getInstance());
                 Fragment newFragment = new WelcomeFragment();
-                FragmentTransaction transaction =getFragmentManager().beginTransaction();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_importing,newFragment);
 //                transaction.addToBackStack(null);
                 transaction.commit();

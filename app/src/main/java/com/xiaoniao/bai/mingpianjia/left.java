@@ -2,6 +2,7 @@ package com.xiaoniao.bai.mingpianjia;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import com.test.test.R;
 
 public class left extends Fragment implements AdapterView.OnItemClickListener
 {
+    private Fragment context;
     private ListView mLv;
 	@Override
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState)
@@ -36,6 +38,7 @@ public class left extends Fragment implements AdapterView.OnItemClickListener
         mLv.setAdapter(adapter);
         mLv.setOnItemClickListener(this);
         //
+        context = this;
         return view;
 	}
 
@@ -59,11 +62,13 @@ public class left extends Fragment implements AdapterView.OnItemClickListener
                         Log.d("1", "onDrawerOpened left");
                         Fragment newFragment = new CreateCardFragment();
                         FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                        transaction.remove(context);
                         transaction.replace(R.id.create_card, newFragment, FragmentTags.FRAGMENT_CREATE_CARD);
 //                transaction.addToBackStack(null);
                         transaction.commit();
+                        System.gc();
 //                getFragmentManager().executePendingTransactions();
-                        ((DrawerLayout) getActivity().findViewById(R.id.id_drawerLayout)).setDrawerListener(null);
+                                ((DrawerLayout) getActivity().findViewById(R.id.id_drawerLayout)).setDrawerListener(null);
                         ((DrawerLayout) getActivity().findViewById(R.id.id_drawerLayout)).setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                         ((DrawerLayout) getActivity().findViewById(R.id.id_drawerLayout)).setDrawerListener((DrawerLayout.DrawerListener) MainActivity.getInstance());
                     }

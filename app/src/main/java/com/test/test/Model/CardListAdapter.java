@@ -16,11 +16,11 @@ import java.util.List;
 /**
  * Created by Hyk on 2015/10/30.
  */
-public class CardAdapter extends ArrayAdapter<Card> {
+public class CardListAdapter extends ArrayAdapter<Card> {
 
     private int resourceID;
 
-    public CardAdapter(Context context, int resource, List<Card> objects) {
+    public CardListAdapter(Context context, int resource, List<Card> objects) {
         super(context, resource, objects);
         resourceID = resource;
     }

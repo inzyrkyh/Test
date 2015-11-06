@@ -86,6 +86,8 @@ public class ImportingFragment extends Fragment implements View.OnClickListener 
         button_close.setOnClickListener(this);
         mHandler.sendEmptyMessage(MSG_PROGRESS_UPDATE);
         ContactsHelper.fetchAllContacts(this.getActivity());
+        ContactsHelper.removeDuplicate(MainActivity.dataList);
+        MainActivity.adapter.notifyDataSetChanged();
         context = this;
         return view;
     }

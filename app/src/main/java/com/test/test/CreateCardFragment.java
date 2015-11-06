@@ -133,7 +133,7 @@ public class CreateCardFragment extends Fragment implements View.OnClickListener
                         MainActivity.dataList.add(card);
                         Toast.makeText(MainActivity.getInstance(), "创建成功", Toast.LENGTH_SHORT).show();
                         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                        transaction.hide(getFragmentManager().findFragmentByTag(FragmentTags.FRAGMENT_CREATE_CARD)).commit();
+                        transaction.remove(getFragmentManager().findFragmentByTag(FragmentTags.FRAGMENT_CREATE_CARD)).commit();
                         ((DrawerLayout) getActivity().findViewById(R.id.id_drawerLayout)).setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                         //refresh datalist
                         CardListFragment.createCardListFragmentFrom(this);
@@ -144,7 +144,7 @@ public class CreateCardFragment extends Fragment implements View.OnClickListener
             case R.id.button_close:
                 Log.d("1", "button close");
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.hide(getFragmentManager().findFragmentByTag(FragmentTags.FRAGMENT_CREATE_CARD)).commit();
+                transaction.remove(getFragmentManager().findFragmentByTag(FragmentTags.FRAGMENT_CREATE_CARD)).commit();
                 ((DrawerLayout) getActivity().findViewById(R.id.id_drawerLayout)).setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                 break;
         }
