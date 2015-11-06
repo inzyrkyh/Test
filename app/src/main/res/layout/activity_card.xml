@@ -5,13 +5,27 @@
     tools:context="com.test.test.CardActivity"
     android:background="@drawable/i_beijing">
 
-    <ImageView
+    <!--<ImageView-->
+        <!--android:id="@+id/card_backframe"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@drawable/i_mingpian003"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_marginBottom="30dp"-->
+        <!--android:adjustViewBounds="true"/>-->
+
+    android:layout_alignLeft="@id/card_backframe"
+    android:layout_alignRight="@id/card_backframe"
+    android:layout_alignTop="@id/card_backframe"
+    android:layout_alignBottom="@id/card_backframe"
+
+    <com.bartoszlipinski.flippablestackview.FlippableStackView
+        android:id="@+id/stackview_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/i_mingpian003"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="30dp"
-        android:adjustViewBounds="true"/>
+        android:loopViews="true"
+        >
+    </com.bartoszlipinski.flippablestackview.FlippableStackView>
 
 </RelativeLayout>
