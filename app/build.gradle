@@ -19,6 +19,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
@@ -39,6 +41,8 @@ dependencies {
 
     //stackview
     compile 'com.bartoszlipinski.flippablestackview:library:1.2.1'
+
+    compile 'com.mcxiaoke.volley:library:1.0.+'
 }
 
 
