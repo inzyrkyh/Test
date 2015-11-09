@@ -71,6 +71,7 @@ public class left extends Fragment implements AdapterView.OnItemClickListener
                                 ((DrawerLayout) getActivity().findViewById(R.id.id_drawerLayout)).setDrawerListener(null);
                         ((DrawerLayout) getActivity().findViewById(R.id.id_drawerLayout)).setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                         ((DrawerLayout) getActivity().findViewById(R.id.id_drawerLayout)).setDrawerListener((DrawerLayout.DrawerListener) MainActivity.getInstance());
+//                        MainActivity.hideBlurCover();
                     }
 
                     @Override

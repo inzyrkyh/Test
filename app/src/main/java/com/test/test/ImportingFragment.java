@@ -89,6 +89,7 @@ public class ImportingFragment extends Fragment implements View.OnClickListener 
         ContactsHelper.removeDuplicate(MainActivity.dataList);
         MainActivity.adapter.notifyDataSetChanged();
         context = this;
+        MainActivity.hideBlurCover();
         return view;
     }
 

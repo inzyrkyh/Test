@@ -51,5 +51,9 @@ public class CardStackAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return this.fragments.size();
     }
+
+    public void remove(Fragment fragment) {
+        fragments.remove(fragment);
+    }
 }
 

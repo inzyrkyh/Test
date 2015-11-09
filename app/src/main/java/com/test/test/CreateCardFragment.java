@@ -3,6 +3,7 @@ package com.test.test;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -89,6 +91,19 @@ public class CreateCardFragment extends Fragment implements View.OnClickListener
         button_create_card.setOnClickListener(this);
         button_close.setOnClickListener(this);
         editTextPhone = (EditText) view.findViewById(R.id.editTextPhone);
+
+//        MainActivity.blurView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+//            @Override
+//            public boolean onPreDraw() {
+//                MainActivity.blurView.getViewTreeObserver().removeOnPreDrawListener(this);
+//                MainActivity.blurView.buildDrawingCache();
+//                Bitmap bmp = MainActivity.blurView.getDrawingCache();
+//                MainActivity.blur(bmp, MainActivity.blurView, 1);
+//                MainActivity.blurView.setVisibility(View.INVISIBLE);
+//                return true;
+//            }
+//        });
+
         return view;
     }
 
@@ -138,6 +153,7 @@ public class CreateCardFragment extends Fragment implements View.OnClickListener
                         //refresh datalist
                         CardListFragment.createCardListFragmentFrom(this);
                         MainActivity.adapter.notifyDataSetChanged();
+                        MainActivity.hideBlurCover();
                     }
                 }
                 break;
@@ -146,6 +162,7 @@ public class CreateCardFragment extends Fragment implements View.OnClickListener
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.remove(getFragmentManager().findFragmentByTag(FragmentTags.FRAGMENT_CREATE_CARD)).commit();
                 ((DrawerLayout) getActivity().findViewById(R.id.id_drawerLayout)).setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                MainActivity.hideBlurCover();
                 break;
         }
     }

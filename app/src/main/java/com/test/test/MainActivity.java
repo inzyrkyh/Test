@@ -25,11 +25,20 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.test.test.Model.Card;
 import com.test.test.Model.CardListAdapter;
-import com.test.test.Model.ContactsHelper;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, CreateCardFragment.OnFragmentInteractionListener, DrawerLayout.DrawerListener, View.OnTouchListener {
@@ -69,6 +78,70 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                ContactsHelper.fetchAllContacts(getInstance());
 //                ContactsHelper.removeDuplicate(dataList);
 //                adapter.notifyDataSetChanged();
+                //test http request
+                // Create a new HttpClient and Post Header
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        HttpClient httpclient = new DefaultHttpClient();
+//                        HttpPost httppost = new HttpPost("http://42.96.138.5/cgi-bin/hello.cgi");
+//
+//                        try {
+//                            // Add your data
+//                            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+//                            nameValuePairs.add(new BasicNameValuePair("id", "12345"));
+//                            nameValuePairs.add(new BasicNameValuePair("stringdata", "AndDev is Cool!"));
+//                            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+//
+//                            // Execute HTTP Post Request
+//                            HttpResponse response = httpclient.execute(httppost);
+//
+//                        } catch (ClientProtocolException e) {
+//                            // TODO Auto-generated catch block
+//                        } catch (IOException e) {
+//                            // TODO Auto-generated catch block
+//                        }
+//                    }
+//                });
+                // Instantiate the RequestQueue.
+                RequestQueue queue = Volley.newRequestQueue(MainActivity.getInstance());
+                String url = "http://42.96.138.5:8080/cgi-bin/hello.cgi";
+//                String url = "http://"+"www.baidu.com";
+
+// Request a string response from the provided URL.
+//                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+//                        new Response.Listener<String>() {
+//                            @Override
+//                            public void onResponse(String response) {
+//                                // Display the first 500 characters of the response string.
+//                                Log.d("Http", "Response is: "+ response.substring(0));
+//                            }
+//                        }, new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+////                        mTextView.setText("That didn't work!");
+//                        Log.d("HTTP", error.networkResponse.data.toString());
+//                    }
+//                });
+
+                //JSON request
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("token", "AbCdEfGh123456");
+                params.put("test", "test123");
+                final JSONObject jsonBody = new JSONObject(params);
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, jsonBody, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Http", response.toString());
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Http", error.networkResponse.data.toString());
+                    }
+                });
+// Add the request to the RequestQueue.
+                queue.add(jsonObjectRequest);
             }
         });
 
@@ -82,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 transaction.replace(R.id.fragment_importing,newFragment);
 //                transaction.addToBackStack(null);
                 transaction.commit();
+                ((DrawerLayout) findViewById(R.id.id_drawerLayout)).closeDrawer(Gravity.RIGHT);
                 return false;
             }
         });
@@ -206,8 +280,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
         if (slideOffset == 0) {
-            blurCover.setBackgroundResource(0);
-            blurView.setVisibility(View.VISIBLE);
+            hideBlurCover();
         }
     }
 
@@ -219,8 +292,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onDrawerClosed(View drawerView) {
 //        Log.d("drawerView", drawerView.getId() + "closed");
-        blurCover.setBackgroundResource(0);
-        blurView.setVisibility(View.VISIBLE);
+        hideBlurCover();
     }
 
     @Override
@@ -245,5 +317,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
         return false;
+    }
+
+    public static void hideBlurCover() {
+        blurCover.setBackgroundResource(0);
+        blurView.setVisibility(View.VISIBLE);
     }
 }

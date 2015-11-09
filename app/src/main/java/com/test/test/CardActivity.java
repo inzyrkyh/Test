@@ -5,9 +5,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.DragEvent;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.StackView;
 
 import com.bartoszlipinski.flippablestackview.FlippableStackView;
+import com.bartoszlipinski.flippablestackview.OrientedViewPager;
+import com.bartoszlipinski.flippablestackview.OrientedViewPager.Orientation;
+import com.bartoszlipinski.flippablestackview.StackPageTransformer;
+import com.test.test.Listener.SwipeDismissListViewTouchListener;
+import com.test.test.Listener.SwipeDismissTouchListener;
 import com.test.test.Model.Card;
 import com.test.test.Model.CardStackAdapter;
 import com.test.test.Model.ContactsHelper;
@@ -25,6 +33,7 @@ public class CardActivity extends AppCompatActivity {
     public static void startActivity(Context lastContext) {
         Intent intent = new Intent(lastContext, CardActivity.class);
         lastContext.startActivity(intent);
+        MainActivity.getInstance().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
     }
 
     @Override
@@ -33,7 +42,7 @@ public class CardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_card);
 //        stackView = (StackView) findViewById(R.id.stackview_card);
 
-        ContactsHelper.fetchAllContacts(this);
+//        ContactsHelper.fetchAllContacts(this);
 //        List<Map<String,Object>> listItems=new ArrayList<Map<String,Object>>();
 //        此处应调用自己的名片数据
 //        for(int i=0;i < 4;i++)
@@ -47,11 +56,44 @@ public class CardActivity extends AppCompatActivity {
 ////        SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems, R.id.stackview_card, new String[]{"image"},new int[]{R.id.stackview_card} );
 //        stackView.setAdapter(cardStackAdapter);
 
-        FlippableStackView stack = (FlippableStackView) findViewById(R.id.stackview_card);
-        stack.initStack(2);
+        final FlippableStackView stack = (FlippableStackView) findViewById(R.id.stackview_card);
+        SwipeDismissTouchListener touchListener =
+                new SwipeDismissTouchListener(
+                        stack,
+                        null,
+                        new SwipeDismissTouchListener.DismissCallbacks() {
+                            @Override
+                            public boolean canDismiss(Object token) {
+                                return true;
+                            }
+
+                            @Override
+                            public void onDismiss(View view, Object token) {
+//                                stack.removeView(stack);
+                                if (mViewPagerFragments.size() > 0) {
+                                    mViewPagerFragments.remove(mViewPagerFragments.get(stack.getCurrentItem()));
+                                    cardStackAdapter.notifyDataSetChanged();
+                                }
+                            }
+
+//                            @Override
+//                            public boolean canDismiss(int position) {
+//                                return true;
+//                            }
+//
+//                            @Override
+//                            public void onDismiss(ListView listView, int[] reverseSortedPositions) {
+//                                for (int position : reverseSortedPositions) {
+//                                    cardStackAdapter.remove(cardStackAdapter.getItem(position));
+//                                }
+//                                cardStackAdapter.notifyDataSetChanged();
+//                            }
+                        });
+        stack.initStack(2, StackPageTransformer.Orientation.HORIZONTAL);
         createViewPagerFragments();
         cardStackAdapter = new CardStackAdapter(getSupportFragmentManager(), mViewPagerFragments);
         stack.setAdapter(cardStackAdapter);
+        stack.setOnTouchListener(touchListener);
     }
 
     private void createViewPagerFragments() {
@@ -72,7 +114,19 @@ public class CardActivity extends AppCompatActivity {
 //        ValueInterpolator interpolatorB = new ValueInterpolator(0, NUMBER_OF_FRAGMENTS - 1, endB, startB);
 
         for (int i = 0; i < 4; ++i) {
-            mViewPagerFragments.add(CardStackFragment.newInstance("1","2"));
+            mViewPagerFragments.add(CardStackFragment.newInstance("1", MainActivity.dataList.get(i)));
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//        MainActivity.getInstance().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        MainActivity.getInstance().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
     }
 }
