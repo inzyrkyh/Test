@@ -208,6 +208,7 @@
                     android:layout_span="1" />
 
                 <Button
+                    android:id="@+id/button_phone_call"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/b_anniu_dianhua_001"
