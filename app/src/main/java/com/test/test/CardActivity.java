@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.DragEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.StackView;
@@ -14,6 +16,7 @@ import com.bartoszlipinski.flippablestackview.FlippableStackView;
 import com.bartoszlipinski.flippablestackview.OrientedViewPager;
 import com.bartoszlipinski.flippablestackview.OrientedViewPager.Orientation;
 import com.bartoszlipinski.flippablestackview.StackPageTransformer;
+import com.test.test.Imported.MyStackView;
 import com.test.test.Listener.SwipeDismissListViewTouchListener;
 import com.test.test.Listener.SwipeDismissTouchListener;
 import com.test.test.Model.Card;
@@ -56,44 +59,12 @@ public class CardActivity extends AppCompatActivity {
 ////        SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems, R.id.stackview_card, new String[]{"image"},new int[]{R.id.stackview_card} );
 //        stackView.setAdapter(cardStackAdapter);
 
-        final FlippableStackView stack = (FlippableStackView) findViewById(R.id.stackview_card);
-        SwipeDismissTouchListener touchListener =
-                new SwipeDismissTouchListener(
-                        stack,
-                        null,
-                        new SwipeDismissTouchListener.DismissCallbacks() {
-                            @Override
-                            public boolean canDismiss(Object token) {
-                                return true;
-                            }
-
-                            @Override
-                            public void onDismiss(View view, Object token) {
-//                                stack.removeView(stack);
-                                if (mViewPagerFragments.size() > 0) {
-                                    mViewPagerFragments.remove(mViewPagerFragments.get(stack.getCurrentItem()));
-                                    cardStackAdapter.notifyDataSetChanged();
-                                }
-                            }
-
-//                            @Override
-//                            public boolean canDismiss(int position) {
-//                                return true;
-//                            }
-//
-//                            @Override
-//                            public void onDismiss(ListView listView, int[] reverseSortedPositions) {
-//                                for (int position : reverseSortedPositions) {
-//                                    cardStackAdapter.remove(cardStackAdapter.getItem(position));
-//                                }
-//                                cardStackAdapter.notifyDataSetChanged();
-//                            }
-                        });
+        final MyStackView stack = (MyStackView) findViewById(R.id.stackview_card);
         stack.initStack(2, StackPageTransformer.Orientation.HORIZONTAL);
         createViewPagerFragments();
         cardStackAdapter = new CardStackAdapter(getSupportFragmentManager(), mViewPagerFragments);
         stack.setAdapter(cardStackAdapter);
-        stack.setOnTouchListener(touchListener);
+
     }
 
     private void createViewPagerFragments() {
@@ -113,7 +84,7 @@ public class CardActivity extends AppCompatActivity {
 //        ValueInterpolator interpolatorG = new ValueInterpolator(0, NUMBER_OF_FRAGMENTS - 1, endG, startG);
 //        ValueInterpolator interpolatorB = new ValueInterpolator(0, NUMBER_OF_FRAGMENTS - 1, endB, startB);
 
-        for (int i = 0; i < 4; ++i) {
+        for (int i = 0; i < Math.min(MainActivity.dataList.size(), 4); ++i) {
             mViewPagerFragments.add(CardStackFragment.newInstance("1", MainActivity.dataList.get(i)));
         }
     }

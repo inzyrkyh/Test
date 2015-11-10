@@ -1,16 +1,22 @@
 package com.test.test;
 
 
+import android.content.ClipData;
+import android.content.ClipDescription;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.test.test.Listener.SwipeDismissTouchListener;
 import com.test.test.Model.Card;
 
 /**
@@ -80,7 +86,43 @@ public class CardStackFragment extends Fragment {
                 Log.d("button", "phone call clicked" + card.getPhoneNumber());
             }
         });
+
+        SwipeDismissTouchListener touchListener =
+                new SwipeDismissTouchListener(
+                        v,
+                        null,
+                        new SwipeDismissTouchListener.DismissCallbacks() {
+                            @Override
+                            public boolean canDismiss(Object token) {
+                                return true;
+                            }
+
+                            @Override
+                            public void onDismiss(View view, Object token) {
+//                                stack.removeView(stack);
+                                //used to do send action, do some http request, etc.
+                                Log.d("Send Action", "Sending card");
+                            }
+
+//                            @Override
+//                            public boolean canDismiss(int position) {
+//                                return true;
+//                            }
+//
+//                            @Override
+//                            public void onDismiss(ListView listView, int[] reverseSortedPositions) {
+//                                for (int position : reverseSortedPositions) {
+//                                    cardStackAdapter.remove(cardStackAdapter.getItem(position));
+//                                }
+//                                cardStackAdapter.notifyDataSetChanged();
+//                            }
+                        });
+        touchListener.setOrientation(SwipeDismissTouchListener.SWIPE_VERTICAL);
+        v.setOnTouchListener(touchListener);
+
         return v;
     }
+
+
 
 }

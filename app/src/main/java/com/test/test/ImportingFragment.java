@@ -23,10 +23,10 @@ import com.test.test.R;
  */
 public class ImportingFragment extends Fragment implements View.OnClickListener {
 
-    private static final int MSG_PROGRESS_UPDATE = 0x110;
-    private static final int MSG_LOAD_FRAGMENT = 0x111;
-    private static final int MSG_IMPORT_OVER = 0x112;
-    private static final int MSG_IMPORT_COMPLETE = 0x113;
+    public static final int MSG_PROGRESS_UPDATE = 0x110;
+    public static final int MSG_LOAD_FRAGMENT = 0x111;
+    public static final int MSG_IMPORT_OVER = 0x112;
+    public static final int MSG_IMPORT_COMPLETE = 0x113;
     Fragment context;
     TextView textViewProgress;
     TextView textViewImportSuccess;
@@ -34,23 +34,23 @@ public class ImportingFragment extends Fragment implements View.OnClickListener 
     Button button_close;
     ImageView imageIndicate;
 
-    private Handler mHandler = new Handler() {
+    public Handler mHandler = new Handler() {
 
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
                 case MSG_PROGRESS_UPDATE:
-                if (progressBar != null) {
-                    int progress = progressBar.getProgress();
-                    progressBar.setProgress(++progress);
-                    if (progress >= 100) {
-                        mHandler.removeMessages(MSG_PROGRESS_UPDATE);
-                        mHandler.sendEmptyMessage(MSG_IMPORT_COMPLETE);
+                    if (progressBar != null) {
+                        int progress = progressBar.getProgress();
+                        progressBar.setProgress(msg.arg1);
+                        if (msg.arg1 >= 100) {
+                            mHandler.removeMessages(MSG_PROGRESS_UPDATE);
+                            mHandler.sendEmptyMessage(MSG_IMPORT_COMPLETE);
+                        }
+                        else {
+//                            mHandler.sendEmptyMessageDelayed(MSG_PROGRESS_UPDATE, 10);
+                            textViewProgress.setText(progress + "%");
+                        }
                     }
-                    else {
-                        mHandler.sendEmptyMessageDelayed(MSG_PROGRESS_UPDATE, 10);
-                        textViewProgress.setText(progress + "%");
-                    }
-                }
                     break;
                 case MSG_LOAD_FRAGMENT:
                     mHandler.sendEmptyMessage(MSG_IMPORT_OVER);
@@ -85,9 +85,12 @@ public class ImportingFragment extends Fragment implements View.OnClickListener 
         button_backup_on_cloud.setOnClickListener(this);
         button_close.setOnClickListener(this);
         mHandler.sendEmptyMessage(MSG_PROGRESS_UPDATE);
-        ContactsHelper.fetchAllContacts(this.getActivity());
+        ContactsHelper.fetchAllContacts(MainActivity.getInstance());
         ContactsHelper.removeDuplicate(MainActivity.dataList);
         MainActivity.adapter.notifyDataSetChanged();
+//        ContactsHelper.fetchAllContacts(this.getActivity());
+//        ContactsHelper.removeDuplicate(MainActivity.dataList);
+//        MainActivity.adapter.notifyDataSetChanged();
         context = this;
         MainActivity.hideBlurCover();
         return view;
