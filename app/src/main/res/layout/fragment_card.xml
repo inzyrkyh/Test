@@ -9,18 +9,21 @@
         android:src="@drawable/i_mingpian002"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="50dp"
         android:adjustViewBounds="true"
+
         android:visibility="visible"/>
+    android:adjustViewBounds="true"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginBottom="50dp"
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/card"
         android:layout_alignBottom="@id/card"
         android:layout_alignRight="@id/card"
-        android:layout_alignTop="@id/card">
+        android:layout_alignTop="@id/card"
+        >
 
 
         <TextView
@@ -41,8 +44,12 @@
             android:layout_height="wrap_content"
             android:src="@drawable/i_mingpianbeijing001"
             android:layout_alignParentBottom="true"
-            android:adjustViewBounds="true"/>
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:adjustViewBounds="true"
 
+            />
+        android:adjustViewBounds="true"
 
         <TableLayout
             android:id="@+id/card_buttonstext_frame"
@@ -159,7 +166,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/b_anniu_ditu001"
+                    android:background="@drawable/b_anniu_ditu002"
                     android:layout_weight="1"
                     android:layout_span="1"
                     />
@@ -167,7 +174,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/b_anniu_wangzhan001"
+                    android:background="@drawable/b_anniu_wangzhan002"
                     android:adjustViewBounds="true"
                     android:layout_weight="1"
                     android:layout_span="1" />
@@ -175,7 +182,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/b_anniu_youjian001"
+                    android:background="@drawable/b_anniu_youjian002"
                     android:adjustViewBounds="true"
                     android:layout_weight="1"
                     android:layout_span="1" />
@@ -183,9 +190,10 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/b_anniu_ditu001"
+                    android:background="@drawable/b_anniu_ditu002"
                     android:layout_weight="1"
-                    android:layout_span="1" />
+                    android:layout_span="1"
+                    />
             </TableRow>
 
             <TableRow
@@ -196,14 +204,14 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/b_anniu_wangzhan001"
+                    android:background="@drawable/b_anniu_wangzhan002"
                     android:layout_weight="1"
                     android:layout_span="1" />
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/b_anniu_youjian001"
+                    android:background="@drawable/b_anniu_youjian002"
                     android:layout_weight="1"
                     android:layout_span="1" />
 
@@ -211,7 +219,7 @@
                     android:id="@+id/button_phone_call"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/b_anniu_dianhua_001"
+                    android:background="@drawable/b_anniu_dianhua_002"
                     android:layout_weight="2"
                     android:layout_span="2" />
             </TableRow>

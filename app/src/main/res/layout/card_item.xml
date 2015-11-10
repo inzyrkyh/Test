@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content" android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:descendantFocusability="blocksDescendants">
 
     <!--<TextView-->
         <!--android:layout_width="wrap_content"-->
@@ -15,76 +16,96 @@
         <!--android:text="1331333333"/>-->
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:id="@+id/card_item_reletivelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
         <ImageView
             android:id="@+id/diban01"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/i_diban"
-            android:adjustViewBounds="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
-            android:paddingTop="2dp"
-            android:paddingLeft="2dp"
-            android:paddingRight="2dp"
-            />
-        <ImageView
-            android:id="@+id/diban02"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/i_diban02"
-            android:layout_alignRight="@id/diban01"
-            android:layout_alignTop="@id/diban01"
             android:adjustViewBounds="true"
-            android:layout_toRightOf="@+id/image_photo"/>
+            />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:paddingTop="2dp"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
         <ImageView
             android:id="@+id/image_photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/i_touxiang001"
             android:layout_alignLeft="@id/diban01"
-            android:layout_alignBottom="@+id/diban02"
-            android:layout_alignTop="@id/diban01"
-            android:adjustViewBounds="true"/>
-        
-        <Button
+            android:adjustViewBounds="true"
+            />
+        <ImageView
+            android:id="@+id/diban02"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/i_diban02"
+            android:scaleType="fitXY"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/image_photo"
+            android:layout_alignTop="@id/image_photo"
+            android:layout_alignBottom="@id/image_photo"
+            android:adjustViewBounds="true"
+            />
+        android:layout_alignRight="@id/diban01"
+        <Button
+            android:layout_width="41dp"
+            android:layout_height="16dp"
             android:background="@drawable/b_fasong"
+            android:layout_alignRight="@id/diban02"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
             />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/b_fasong"/>
-
         <RelativeLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
+            android:id="@+id/card_item_text_layout"
+            android:layout_width="160dp"
             android:layout_alignLeft="@id/diban02"
-            android:layout_marginLeft="10dip"
-            android:layout_marginTop="20dip"
-            android:layout_height="80dip" >
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            >
             <TextView
                 android:id="@+id/card_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:textColor="#ffFFFF"
-                android:textSize="25sp"
-                android:text="hyk"/>
+                android:textSize="16sp"
+                android:text="健身房健身房"
+                android:maxLength="3"
+                android:singleLine="true"
+                android:ellipsize="end" />
+
             <TextView
                 android:id="@+id/card_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:textColor="#ffFFFF"
-                android:textSize="14sp"
-                android:layout_marginTop="10dp"
+                android:textSize="10sp"
+                android:layout_marginTop="3dp"
                 android:layout_below="@id/card_name"
-                android:text="Shanghai Bird Technology Co., Ltd."/>
+                android:text="Shanghai Bird Technology Co., Ltd."
+                android:singleLine="true" />
+
+            <TextView
+                android:id="@+id/card_career"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignBottom="@id/card_name"
+                android:layout_marginRight="10dp"
+                android:text="Sales Director"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp"
+                android:singleLine="true" />
         </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>
