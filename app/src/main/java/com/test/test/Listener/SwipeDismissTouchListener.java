@@ -21,6 +21,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.ListActivity;
 import android.app.ListFragment;
+import android.support.v4.view.MotionEventCompat;
+import android.test.TouchUtils;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -322,7 +324,8 @@ public class SwipeDismissTouchListener implements View.OnTouchListener {
 //                        mView.setAlpha(Math.max(0f, Math.min(1f,
 //                                1f - 2f * Math.abs(deltaY) / mViewWidth)));
                     }
-                    return false;
+                    //return false;     //origin. fix a bug causes crash
+                    return true;
                 }
                 break;
             }
@@ -376,4 +379,5 @@ public class SwipeDismissTouchListener implements View.OnTouchListener {
     public void setOrientation(int orientation) {
         mSwipingOrientation = orientation;
     }
-}
+
+    }

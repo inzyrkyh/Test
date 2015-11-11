@@ -6,22 +6,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.DragEvent;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.StackView;
 
 import com.bartoszlipinski.flippablestackview.FlippableStackView;
-import com.bartoszlipinski.flippablestackview.OrientedViewPager;
-import com.bartoszlipinski.flippablestackview.OrientedViewPager.Orientation;
 import com.bartoszlipinski.flippablestackview.StackPageTransformer;
-import com.test.test.Imported.MyStackView;
-import com.test.test.Listener.SwipeDismissListViewTouchListener;
 import com.test.test.Listener.SwipeDismissTouchListener;
 import com.test.test.Model.Card;
 import com.test.test.Model.CardStackAdapter;
-import com.test.test.Model.ContactsHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,11 +50,46 @@ public class CardActivity extends AppCompatActivity {
 ////        SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems, R.id.stackview_card, new String[]{"image"},new int[]{R.id.stackview_card} );
 //        stackView.setAdapter(cardStackAdapter);
 
-        final MyStackView stack = (MyStackView) findViewById(R.id.stackview_card);
+        final FlippableStackView stack = (FlippableStackView) findViewById(R.id.stackview_card);
         stack.initStack(2, StackPageTransformer.Orientation.HORIZONTAL);
         createViewPagerFragments();
         cardStackAdapter = new CardStackAdapter(getSupportFragmentManager(), mViewPagerFragments);
         stack.setAdapter(cardStackAdapter);
+
+//        RelativeLayout layout = (RelativeLayout) stack.findViewById(R.id.card_layout);
+
+        SwipeDismissTouchListener touchListener =
+                new SwipeDismissTouchListener(
+                        stack,
+                        null,
+                        new SwipeDismissTouchListener.DismissCallbacks() {
+                            @Override
+                            public boolean canDismiss(Object token) {
+                                return true;
+                            }
+
+                            @Override
+                            public void onDismiss(View view, Object token) {
+//                                stack.removeView(stack);
+                                //used to do send action, do some http request, etc.
+                                Log.d("Send Action", "Sending card");
+                            }
+
+//                            @Override
+//                            public boolean canDismiss(int position) {
+//                                return true;
+//                            }
+//
+//                            @Override
+//                            public void onDismiss(ListView listView, int[] reverseSortedPositions) {
+//                                for (int position : reverseSortedPositions) {
+//                                    cardStackAdapter.remove(cardStackAdapter.getItem(position));
+//                                }
+//                                cardStackAdapter.notifyDataSetChanged();
+//                            }
+                        });
+        touchListener.setOrientation(SwipeDismissTouchListener.SWIPE_VERTICAL);
+        stack.setOnTouchListener(touchListener);
 
     }
 

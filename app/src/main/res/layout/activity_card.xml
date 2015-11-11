@@ -20,12 +20,12 @@
     android:layout_alignTop="@id/card_backframe"
     android:layout_alignBottom="@id/card_backframe"
 
-    <com.test.test.Imported.MyStackView
+    <com.bartoszlipinski.flippablestackview.FlippableStackView
         android:id="@+id/stackview_card"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:loopViews="true"
         >
-    </com.test.test.Imported.MyStackView>
+    </com.bartoszlipinski.flippablestackview.FlippableStackView>
 
 </RelativeLayout>

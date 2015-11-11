@@ -1,30 +1,39 @@
-package com.test.test.Imported;
+/**
+ * Copyright 2015 Bartosz Lipinski
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.bartoszlipinski.flippablestackview;
 
 import android.content.Context;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.PagerAdapter;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.view.ViewParent;
-
-import com.bartoszlipinski.flippablestackview.FlippableStackView;
-import com.bartoszlipinski.flippablestackview.StackPageTransformer;
 
 /**
- * Created by MiJiefei on 2015/11/10.
+ * Created by Bartosz Lipinski
+ * 31.01.15
  */
-public class MyStackView extends FlippableStackView {
+public class FlippableStackView extends OrientedViewPager {
+    private static final float DEFAULT_CURRENT_PAGE_SCALE = 0.95f;
+    private static final float DEFAULT_TOP_STACKED_SCALE = 0.95f;
+    private static final float DEFAULT_OVERLAP_FACTOR = 0.0f;
 
-    private static final float DEFAULT_CURRENT_PAGE_SCALE = 0.8f;
-    private static final float DEFAULT_TOP_STACKED_SCALE = 0.7f;
-    private static final float DEFAULT_OVERLAP_FACTOR = 0.4f;
-
-    public MyStackView(Context context) {
+    public FlippableStackView(Context context) {
         super(context);
     }
 
-    public MyStackView(Context context, AttributeSet attrs) {
+    public FlippableStackView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -76,22 +85,5 @@ public class MyStackView extends FlippableStackView {
     public void setAdapter(PagerAdapter adapter) {
         super.setAdapter(adapter);
         setCurrentItem(adapter.getCount() - 1);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        boolean flag = false;
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_MOVE:
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
-                flag = super.onTouchEvent(ev);
-//                ViewParent parent = getParent();
-//                if (parent != null) {
-//                    parent.requestDisallowInterceptTouchEvent(false);
-//                }
-                // Not else! Note that mIsBeingDragged can be set above.
-        }
-        return flag;
     }
 }
