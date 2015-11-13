@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.fortysevendeg.swipelistview.SwipeListView;
 import com.test.test.Model.Card;
 
 /**
@@ -31,7 +32,7 @@ public class CardListFragment extends Fragment implements AdapterView.OnItemClic
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.content_main, container, false);
-        MainActivity.lv = (ListView) view.findViewById(R.id.listViewNameCard);
+        MainActivity.lv = (SwipeListView) view.findViewById(R.id.listViewNameCard);
         if (MainActivity.lv != null) {
             MainActivity.lv.setAdapter(MainActivity.adapter);
             MainActivity.lv.setOnItemClickListener(this);

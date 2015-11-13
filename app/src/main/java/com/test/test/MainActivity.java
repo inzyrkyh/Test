@@ -5,12 +5,16 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v8.renderscript.Allocation;
@@ -18,6 +22,7 @@ import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -32,6 +37,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.fortysevendeg.swipelistview.SwipeListView;
 import com.test.test.Model.Card;
 import com.test.test.Model.CardListAdapter;
 
@@ -41,13 +47,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, CreateCardFragment.OnFragmentInteractionListener, DrawerLayout.DrawerListener, View.OnTouchListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, CreateCardFragment.OnFragmentInteractionListener, DrawerLayout.DrawerListener, View.OnTouchListener,
+        NavigationView.OnNavigationItemSelectedListener {
 
     public static List<Card> dataList = new ArrayList<Card>();
 
     static AppCompatActivity context;
 
-    public static ListView lv;
+    public static SwipeListView lv;
     public static CardListAdapter adapter;
 
     ImageButton ib_all_calls;
@@ -65,6 +72,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         blurCover = findViewById(R.id.blur_cover);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setItemIconTintList(null);
+        navigationView.setNavigationItemSelectedListener(this);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.id_drawerLayout);
+        drawer.setScrimColor(Color.parseColor("#64000000"));
 
         adapter = new CardListAdapter(this, R.layout.card_item, dataList);
 
@@ -233,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static void blur(Bitmap bkg, View view, float offset) {
         long startMs = System.currentTimeMillis();
         float radius = 2f;
-        float scaleFactor = 5;
+        float scaleFactor = 8;
 
         float finalRadius = (float) Math.max(0.01, radius * offset);
 
@@ -266,22 +278,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onDrawerSlide(final View drawerView, final float slideOffset) {
 //        Log.d("drawerView", drawerView.getId() + "");
-        MainActivity.blurView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                if (slideOffset > 0) {
-                    MainActivity.blurView.getViewTreeObserver().removeOnPreDrawListener(this);
-                    MainActivity.blurView.buildDrawingCache();
-                    Bitmap bmp = MainActivity.blurView.getDrawingCache();
-                    MainActivity.blur(bmp, MainActivity.blurView, slideOffset);
-                    blurView.setVisibility(View.INVISIBLE);
-                }
-                return true;
-            }
-        });
-        if (slideOffset == 0) {
-            hideBlurCover();
-        }
+//        MainActivity.blurView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+//            @Override
+//            public boolean onPreDraw() {
+//                if (slideOffset > 0) {
+//                    MainActivity.blurView.getViewTreeObserver().removeOnPreDrawListener(this);
+//                    MainActivity.blurView.buildDrawingCache();
+//                    Bitmap bmp = MainActivity.blurView.getDrawingCache();
+//                    MainActivity.blur(bmp, MainActivity.blurView, slideOffset);
+//                    blurView.setVisibility(View.INVISIBLE);
+//                }
+//                return true;
+//            }
+//        });
+//        if (slideOffset == 0) {
+//            hideBlurCover();
+//        }
     }
 
     @Override
@@ -322,5 +334,63 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static void hideBlurCover() {
         blurCover.setBackgroundResource(0);
         blurView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_personal_detail) {
+            Fragment newFragment = new CreateCardFragment();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.create_card, newFragment, FragmentTags.FRAGMENT_CREATE_CARD);
+            transaction.commit();
+            System.gc();
+            ((DrawerLayout) findViewById(R.id.id_drawerLayout)).setDrawerListener(null);
+            ((DrawerLayout) findViewById(R.id.id_drawerLayout)).setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+//                        MainActivity.hideBlurCover();
+            MainActivity.blurView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+//            @Override
+            public boolean onPreDraw() {
+                MainActivity.blurView.getViewTreeObserver().removeOnPreDrawListener(this);
+                MainActivity.blurView.buildDrawingCache();
+                Bitmap bmp = MainActivity.blurView.getDrawingCache();
+                MainActivity.blur(bmp, MainActivity.blurView, 1);
+                blurView.setVisibility(View.INVISIBLE);
+                return true;
+            }
+            });
+            // Handle the camera action
+        } else if (id == R.id.nav_add_contact) {
+
+        } else if (id == R.id.nav_import_contact) {
+
+        } else if (id == R.id.nav_friend_group) {
+
+        } else if (id == R.id.nav_sync_with_cloud) {
+
+        } else if (id == R.id.nav_position_share) {
+
+        } else if (id == R.id.nav_navigation) {
+
+        } else if (id == R.id.nav_birthday_remind) {
+
+        } else if (id == R.id.nav_notification) {
+
+        }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.id_drawerLayout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.id_drawerLayout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }
