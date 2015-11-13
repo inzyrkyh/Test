@@ -7,7 +7,8 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
 
-    <ListView
+    <com.fortysevendeg.swipelistview.SwipeListView
+        xmlns:swipe="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/listViewNameCard"
@@ -15,5 +16,15 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_centerHorizontal="true"
-        android:divider="@android:color/transparent"/>
+        android:divider="@android:color/transparent"
+        swipe:swipeFrontView="@id/id_card_item_front"
+        swipe:swipeBackView="@id/id_card_item_front"
+        swipe:swipeActionLeft="reveal"
+        swipe:swipeActionRight="reveal"
+        swipe:swipeMode="right"
+        swipe:swipeCloseAllItemsWhenMoveList="true"
+        swipe:swipeOpenOnLongPress="true"
+        swipe:swipeAnimationTime="300"
+        swipe:swipeOffsetLeft="150dp"
+        swipe:swipeOffsetRight="150dp"/>
 </RelativeLayout>

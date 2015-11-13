@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="160dp"
+    android:orientation="vertical"
+    android:gravity="top"
+    android:paddingTop="20dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/i_touxiang001"
+        android:layout_gravity="center"/>
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:id="@+id/textView_name"
+        android:paddingTop="10dp"
+        android:text="张黎"
+        android:singleLine="true"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"/>
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="Sales Director" android:id="@+id/textView_career"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"/>
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="Shanghai bird Technology" android:id="@+id/textView_company"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"/>
+
+</LinearLayout>

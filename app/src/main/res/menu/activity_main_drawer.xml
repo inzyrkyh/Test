@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_personal_detail" android:icon="@drawable/b_g_gerenziliao001"
+            android:title="个人资料"
+            android:checkable="false"
+            />
+        <item android:id="@+id/nav_add_contact" android:icon="@drawable/b_g_tianjia001"
+            android:checkable="false"
+            android:title="添加联系人" />
+        <item android:id="@+id/nav_import_contact" android:icon="@drawable/b_g_tongxunlu001"
+            android:checkable="false"
+            android:title="从通讯录导入" />
+        <item android:id="@+id/nav_friend_group" android:icon="@drawable/b_g_haoyou001"
+            android:checkable="false"
+            android:title="好友分组" />
+        <item android:id="@+id/nav_sync_with_cloud" android:icon="@drawable/b_g_yun001"
+            android:checkable="false"
+            android:theme="@style/TextAppearance.AppCompat.Large.Inverse"
+            android:title="云端同步" />
+        <item android:id="@+id/nav_position_share" android:icon="@drawable/b_g_weizhi001"
+            android:checkable="false"
+            android:title="同步位置" />
+        <item android:id="@+id/nav_navigation" android:icon="@drawable/b_g_ditu001"
+            android:checkable="false"
+            android:title="地图导航" />
+        <item android:id="@+id/nav_birthday_remind" android:icon="@drawable/b_g_shengri001"
+            android:checkable="false"
+            android:title="生日提醒" />
+        <item android:id="@+id/nav_notification" android:icon="@drawable/b_g_tongzhi001"
+            android:checkable="false"
+            android:title="通知信息" />
+    </group>
+
+    <!--<item android:title="Communicate">-->
+        <!--<menu>-->
+            <!--<item android:id="@+id/nav_share" android:icon="@android:drawable/ic_menu_share"-->
+                <!--android:title="Share" />-->
+            <!--<item android:id="@+id/nav_send" android:icon="@android:drawable/ic_menu_send"-->
+                <!--android:title="Send" />-->
+        <!--</menu>-->
+    <!--</item>-->
+
+</menu>
