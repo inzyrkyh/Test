@@ -4,9 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:fitsSystemWindows="true"
-    tools:openDrawer="start"
     tools:context="com.test.test.MainActivity"
     android:id="@+id/id_drawerLayout">
+    tools:openDrawer="start"
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -54,12 +54,13 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
                 android:singleLine="true"
-                android:background="@drawable/myedittext_textfield_activated_holo_light"
+                android:background="@drawable/myedittext_textfield_focused_holo_light"
                 android:layout_toRightOf="@+id/button_all_people"
                 android:layout_toLeftOf="@+id/button_search"
                 android:id="@+id/editTextSearchBar"
                 android:hint="Search..."
                 android:textColorHint="#FFFFFF"
+                android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:textAlignment="gravity"
                 android:gravity="bottom"
@@ -96,49 +97,64 @@
             android:layout_height="24dp"
             android:paddingRight="20dp"
             android:paddingLeft="20dp"
+            android:paddingBottom="1dp"
             android:layout_below="@+id/relative_layout_1"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:id="@+id/calls_layout">
 
-            <ImageButton
+            <Button
                 android:id="@+id/button_all_calls"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/button_selector"
+                android:background="@drawable/button_selector"
+                android:text="All Calls"
+                android:textColor="@drawable/button_color_selector"
                  />
 
-            <ImageButton
+            <Button
                 android:id="@+id/button_recent_calls"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/button_selector"
+                android:background="@drawable/button_selector"
+                android:text="Recent calls"
+                android:textColor="@drawable/button_color_selector"
                  />
 
         </LinearLayout>
 
         <FrameLayout
+            android:id="@+id/fragment_list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_below="@id/calls_layout"
-            android:id="@+id/fragment_list"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
+            >
+            <ListView
+                android:id="@+id/cardlist_alphabetindex"
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:layout_marginRight="-20dp"></ListView>
+        </FrameLayout>
+        <FrameLayout
+            android:id="@+id/fragment_importing"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@id/calls_layout"
+            android:paddingTop="5dp"
             ></FrameLayout>
         <FrameLayout
+            android:id="@+id/fragment_progress"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_below="@id/calls_layout"
             android:paddingTop="5dp"
-            android:id="@+id/fragment_importing"></FrameLayout>
-        <FrameLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_below="@id/calls_layout"
-            android:paddingTop="5dp"
-            android:id="@+id/fragment_progress"></FrameLayout>
+            >
+        </FrameLayout>
 
     </RelativeLayout>
 
@@ -153,15 +169,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         ></FrameLayout>
-
-    <!--<fragment-->
-        <!--android:id="@+id/id_left"-->
-        <!--android:name="com.xiaoniao.bai.mingpianjia.left"-->
-        <!--android:layout_width="200dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_gravity="left"-->
-        <!--android:tag="LEFT"-->
-        <!--tools:layout="@layout/left" />-->
 
     <!--<include layout="@layout/content_main" />-->
 

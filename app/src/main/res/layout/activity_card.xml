@@ -5,15 +5,15 @@
     tools:context="com.test.test.CardActivity"
     android:background="@drawable/i_beijing">
 
-    <!--<ImageView-->
-        <!--android:id="@+id/card_backframe"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:src="@drawable/i_mingpian003"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_marginBottom="30dp"-->
-        <!--android:adjustViewBounds="true"/>-->
+    <ImageView
+        android:id="@+id/card_backframe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/i_mingpian003"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
+        android:adjustViewBounds="true"/>
 
     android:layout_alignLeft="@id/card_backframe"
     android:layout_alignRight="@id/card_backframe"

@@ -23,7 +23,7 @@
         swipe:swipeActionRight="reveal"
         swipe:swipeMode="right"
         swipe:swipeCloseAllItemsWhenMoveList="true"
-        swipe:swipeOpenOnLongPress="true"
+        swipe:swipeOpenOnLongPress="false"
         swipe:swipeAnimationTime="300"
         swipe:swipeOffsetLeft="150dp"
         swipe:swipeOffsetRight="150dp"/>
