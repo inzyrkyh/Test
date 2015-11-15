@@ -23,9 +23,11 @@ public class CardActivity extends AppCompatActivity {
     CardStackAdapter cardStackAdapter;
     List<Card> dataList = new ArrayList<Card>();
     private List<Fragment> mViewPagerFragments;
+    private int enterFromListPosition;
 
-    public static void startActivity(Context lastContext) {
+    public static void startActivity(Context lastContext, int position) {
         Intent intent = new Intent(lastContext, CardActivity.class);
+        intent.putExtra("cardPosition", position);
         lastContext.startActivity(intent);
         MainActivity.getInstance().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
     }
@@ -33,6 +35,7 @@ public class CardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        enterFromListPosition = getIntent().getIntExtra("cardPosition", 0);
         setContentView(R.layout.activity_card);
 //        stackView = (StackView) findViewById(R.id.stackview_card);
 
@@ -110,8 +113,14 @@ public class CardActivity extends AppCompatActivity {
 //        ValueInterpolator interpolatorG = new ValueInterpolator(0, NUMBER_OF_FRAGMENTS - 1, endG, startG);
 //        ValueInterpolator interpolatorB = new ValueInterpolator(0, NUMBER_OF_FRAGMENTS - 1, endB, startB);
 
-        for (int i = 0; i < Math.min(MainActivity.dataList.size(), 4); ++i) {
-            mViewPagerFragments.add(CardStackFragment.newInstance("1", MainActivity.dataList.get(i)));
+        //demo 如果是自己的名片,展示多张名片 如果是别人的 展示一张
+        if (MainActivity.dataList.get(enterFromListPosition).getMyCard()) {
+            for (int i = 0; i < Math.min(MainActivity.dataList.size(), 4); ++i) {
+                mViewPagerFragments.add(CardStackFragment.newInstance("1", MainActivity.dataList.get(0)));
+            }
+        }
+        else {
+            mViewPagerFragments.add(CardStackFragment.newInstance("1", MainActivity.dataList.get(enterFromListPosition)));
         }
     }
 

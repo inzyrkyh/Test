@@ -121,7 +121,7 @@ public class ContactsHelper extends AsyncTask<String, String, String>{
         if (contentResolver != null) {
             ContentResolver cr = MainActivity.getInstance().getContentResolver();
             Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
-                    null, null, null, null);
+                    null, null, null, ContactsContract.CommonDataKinds.Phone.SORT_KEY_PRIMARY);
             if (cur.getCount() > 0) {
                 int i = 0;
                 while (cur.moveToNext() /*&& i < 10*/) {
@@ -149,8 +149,13 @@ public class ContactsHelper extends AsyncTask<String, String, String>{
                     Message msg = new Message();
                     msg.what = ImportingFragment.MSG_PROGRESS_UPDATE;
                     msg.arg1 = (int) (((float)cur.getPosition() + 1.0) / ((float)cur.getCount()) * 100);
-                    ((ImportingFragment) MainActivity.getInstance().getFragmentManager().findFragmentByTag("ImportingFragment"))
-                            .mHandler.sendMessage(msg);
+//                    ((ImportingFragment) MainActivity.getInstance().getFragmentManager().findFragmentByTag("ImportingFragment"))
+//                            .mHandler.sendMessage(msg);
+                    ImportingFragment importingFragment = (ImportingFragment) MainActivity.getInstance().getFragmentManager().findFragmentByTag("ImportingFragment");
+                    if (importingFragment != null) {
+                        importingFragment.mHandler.sendMessage(msg);
+                    }
+
                     i++;
                 }
             }

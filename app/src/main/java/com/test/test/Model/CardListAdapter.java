@@ -38,7 +38,7 @@ public class CardListAdapter extends ArrayAdapter<Card> {
         TextView tvName = (TextView) view.findViewById(R.id.card_name);
         TextView tvPhone = (TextView) view.findViewById(R.id.card_phone);
         tvName.setText(card.getName());
-        tvPhone.setText(card.getPhoneNumber());
+//        tvPhone.setText(card.getPhoneNumber());
         return view;
     }
 }

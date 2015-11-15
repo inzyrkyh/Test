@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.daimajia.androidviewhover.BlurLayout;
@@ -39,12 +40,13 @@ public class CreateCardFragment extends Fragment implements View.OnClickListener
     private String mParam1;
     private String mParam2;
 
-    private Button button_create_card;
-    private Button button_close;
+    private ImageButton button_create_card;
+    private ImageButton button_close;
     private EditText editTextName;
     private EditText editTextPhone;
 
     private Card card;
+    private boolean isMyCard;
 
     private OnFragmentInteractionListener mListener;
 
@@ -57,11 +59,10 @@ public class CreateCardFragment extends Fragment implements View.OnClickListener
      * @return A new instance of fragment CreateCardFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CreateCardFragment newInstance(String param1, String param2) {
+    public static CreateCardFragment newInstance(String param1, boolean mycard) {
         CreateCardFragment fragment = new CreateCardFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putBoolean("isTheCardMine", mycard);
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,8 +75,7 @@ public class CreateCardFragment extends Fragment implements View.OnClickListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            isMyCard = getArguments().getBoolean("isTheCardMine");
         }
     }
 
@@ -86,8 +86,8 @@ public class CreateCardFragment extends Fragment implements View.OnClickListener
         View view = inflater.inflate(R.layout.fragment_create_card, container, false);
         editTextName = (EditText) view.findViewById(R.id.editTextName);
         editTextName.requestFocus();
-        button_create_card = (Button) view.findViewById(R.id.button_create);
-        button_close = (Button) view.findViewById(R.id.button_close);
+        button_create_card = (ImageButton) view.findViewById(R.id.button_create);
+        button_close = (ImageButton) view.findViewById(R.id.button_close);
         button_create_card.setOnClickListener(this);
         button_close.setOnClickListener(this);
         editTextPhone = (EditText) view.findViewById(R.id.editTextPhone);
@@ -145,7 +145,8 @@ public class CreateCardFragment extends Fragment implements View.OnClickListener
                 else{
                     card = new Card(editTextName.getText().toString(), editTextPhone.getText().toString());
                     if (card != null) {
-                        MainActivity.dataList.add(card);
+                        card.setMycard(isMyCard);
+                        MainActivity.dataList.add(0, card);
                         Toast.makeText(MainActivity.getInstance(), "创建成功", Toast.LENGTH_SHORT).show();
                         FragmentTransaction transaction = getFragmentManager().beginTransaction();
                         transaction.remove(getFragmentManager().findFragmentByTag(FragmentTags.FRAGMENT_CREATE_CARD)).commit();
@@ -153,6 +154,9 @@ public class CreateCardFragment extends Fragment implements View.OnClickListener
                         //refresh datalist
                         CardListFragment.createCardListFragmentFrom(this);
                         MainActivity.adapter.notifyDataSetChanged();
+//                        items.add(0, edittext.getText().toString());
+//                        adapter.notifyDataSetChanged();
+//                        MainActivity.lv.smoothScrollToPosition(0);
                         MainActivity.hideBlurCover();
                     }
                 }

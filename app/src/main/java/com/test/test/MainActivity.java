@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -40,6 +41,7 @@ import com.android.volley.toolbox.Volley;
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.test.test.Model.Card;
 import com.test.test.Model.CardListAdapter;
+import com.test.test.Model.ContactsHelper;
 
 import org.json.JSONObject;
 
@@ -57,8 +59,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static SwipeListView lv;
     public static CardListAdapter adapter;
 
-    ImageButton ib_all_calls;
-    ImageButton ib_recent_calls;
+    Button ib_all_calls;
+    Button ib_recent_calls;
 
     public static View blurView;
     public static View blurCover;
@@ -178,9 +180,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ImageButton ib_edit = (ImageButton) findViewById(R.id.button_edit);
         EditText editText_searchBar = (EditText) findViewById(R.id.editTextSearchBar);
         editText_searchBar.clearFocus();
-        ib_all_calls = (ImageButton) findViewById(R.id.button_all_calls);
+        ib_all_calls = (Button) findViewById(R.id.button_all_calls);
         ib_all_calls.setSelected(true);
-        ib_recent_calls = (ImageButton) findViewById(R.id.button_recent_calls);
+        ib_recent_calls = (Button) findViewById(R.id.button_recent_calls);
 
         ib_all_calls.setOnClickListener(this);
         ib_all_calls.setOnTouchListener(this);
@@ -343,6 +345,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (id == R.id.nav_personal_detail) {
             Fragment newFragment = new CreateCardFragment();
+            Bundle args = new Bundle();
+            args.putBoolean("isTheCardMine", true);
+            newFragment.setArguments(args);
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.create_card, newFragment, FragmentTags.FRAGMENT_CREATE_CARD);
             transaction.commit();
@@ -365,7 +370,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (id == R.id.nav_add_contact) {
 
         } else if (id == R.id.nav_import_contact) {
-
+            ContactsHelper.fetchAllContacts(this);
+            ContactsHelper.removeDuplicate(MainActivity.dataList);
+            MainActivity.adapter.notifyDataSetChanged();
         } else if (id == R.id.nav_friend_group) {
 
         } else if (id == R.id.nav_sync_with_cloud) {

@@ -3,7 +3,9 @@ package com.test.test;
 
 import android.content.ClipData;
 import android.content.ClipDescription;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -85,6 +87,9 @@ public class CardStackFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d("button", "phone call clicked" + card.getPhoneNumber());
+                //            phone call
+            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + (card).getPhoneNumber()));
+            startActivity(intent);
             }
         });
 
