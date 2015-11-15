@@ -13,7 +13,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:icon" >
+        tools:replace="android:icon"
+        >
         <!--<activity-->
             <!--android:name=".ImportActivity"-->
             <!--android:launchMode="singleTop" >-->
@@ -23,7 +24,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
 
              <!--<intent-filter>-->
              <!--<action android:name="android.intent.action.MAIN" />-->
@@ -33,7 +35,8 @@
         <activity
             android:name=".SplashActivity"
             android:noHistory="true"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
@@ -43,7 +46,8 @@
         </activity>
         <activity android:name=".CardActivity"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN" />-->
 
