@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content" android:layout_height="wrap_content"
     android:orientation="vertical"
     android:descendantFocusability="blocksDescendants"
-    android:id="@+id/id_card_item_back"
     >
 
     <!--<TextView-->
@@ -17,45 +16,50 @@
     <!--android:id="@+id/card_phone"-->
     <!--android:text="1331333333"/>-->
 
-    <ImageButton
-        android:id="@+id/b_list_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/card_item_reletivelayout"
-        android:src="@drawable/b_youjian"
-        />
-    <ImageButton
-        android:id="@+id/b_list_sms"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/b_duanxin"
-        android:layout_below="@id/b_list_email"
-        />
-    <ImageButton
-        android:id="@+id/b_list_phonecall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/b_list_email"
-        android:src="@drawable/b_dianhua"
-        android:scaleType="center"
-        android:layout_alignTop="@id/b_list_email"
-        android:layout_alignBottom="@id/b_list_sms"
-        />
+    <!--<RelativeLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!-->-->
 
-    <ImageButton
-        android:id="@+id/b_list_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/b_bianji"
-        android:layout_alignParentRight="true"
-        />
-    <ImageButton
-        android:id="@+id/b_list_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/b_shanchu"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/b_list_edit"
-        />
+        <!--<ImageButton-->
+            <!--android:id="@+id/b_list_email"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignBottom="@id/card_item_reletivelayout"-->
+            <!--android:src="@drawable/b_youjian"-->
+            <!--/>-->
+        <!--<ImageButton-->
+            <!--android:id="@+id/b_list_sms"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/b_duanxin"-->
+            <!--android:layout_below="@id/b_list_email"-->
+            <!--/>-->
+        <!--<ImageButton-->
+            <!--android:id="@+id/b_list_phonecall"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_toRightOf="@id/b_list_email"-->
+            <!--android:src="@drawable/b_dianhua"-->
+            <!--android:scaleType="center"-->
+            <!--android:layout_alignTop="@id/b_list_email"-->
+            <!--android:layout_alignBottom="@id/b_list_sms"-->
+            <!--/>-->
 
-</RelativeLayout>
+        <!--<ImageButton-->
+            <!--android:id="@+id/b_list_edit"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/b_bianji"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--/>-->
+        <!--<ImageButton-->
+            <!--android:id="@+id/b_list_delete"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/b_shanchu"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_below="@id/b_list_edit"-->
+            <!--/>-->
+    <!--</RelativeLayout>-->
+</LinearLayout>
