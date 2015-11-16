@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Message;
 
-import com.xiaoniao.bai.mingpianjia.AppHandler;
-import com.xiaoniao.bai.utils.AppConstants;
-import com.xiaoniao.bai.utils.Utils;
+import com.test.test.utils.AppConstants;
+import com.test.test.utils.AppHandler;
+import com.test.test.utils.Utils;
 
 /**
  * Created by bai on 2015/11/4.

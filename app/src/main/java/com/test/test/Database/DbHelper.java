@@ -7,8 +7,8 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.xiaoniao.bai.utils.AppConstants;
-import com.xiaoniao.bai.utils.Utils;
+import com.test.test.utils.AppConstants;
+import com.test.test.utils.Utils;
 
 /**
  * Created by bai on 2015/11/11.

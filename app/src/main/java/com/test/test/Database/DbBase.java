@@ -5,9 +5,9 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 
-import com.xiaoniao.bai.mingpianjia.Contact;
-import com.xiaoniao.bai.mingpianjia.ContactsMgr;
-import com.xiaoniao.bai.utils.AppConstants;
+import com.test.test.Model.Card;
+import com.test.test.Model.ContactsMgr;
+import com.test.test.utils.AppConstants;
 
 import java.util.HashMap;
 
@@ -66,7 +66,7 @@ public class DbBase{
     private void LoadContacts(){
 
     }
-    private void SaveContact(Contact contact){
+    private void SaveContact(Card contact){
 
     }
     private void ReadPhonebook(){
@@ -77,9 +77,9 @@ public class DbBase{
                         ContactsContract.CommonDataKinds.Phone.SORT_KEY_PRIMARY}, null, null, "sort_key");
         if ( cursor.getCount() > 0 )
             while (cursor.moveToNext()){
-                Contact contact = new Contact();
+                Card contact = new Card();
                 contact.setName(cursor.getString(0));
-                contact.setPhoneNum(cursor.getString(1));
+                contact.setPhoneNumber(cursor.getString(1));
                 contact.setSortKey(contact.getSortKey(cursor.getString(2)));
                 ContactsMgr.getInstance().AddContact(contact);
                 SaveContact(contact);

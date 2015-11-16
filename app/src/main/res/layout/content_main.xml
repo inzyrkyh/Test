@@ -18,7 +18,7 @@
         android:layout_centerHorizontal="true"
         android:divider="@android:color/transparent"
         swipe:swipeFrontView="@id/id_card_item_front"
-        swipe:swipeBackView="@id/id_card_item_front"
+        swipe:swipeBackView="@id/id_card_item_back"
         swipe:swipeActionLeft="reveal"
         swipe:swipeActionRight="reveal"
         swipe:swipeMode="right"

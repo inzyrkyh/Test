@@ -39,9 +39,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fortysevendeg.swipelistview.SwipeListView;
+import com.test.test.Database.DbBase;
 import com.test.test.Model.Card;
 import com.test.test.Model.CardListAdapter;
 import com.test.test.Model.ContactsHelper;
+import com.test.test.Network.NetThread;
 
 import org.json.JSONObject;
 
@@ -71,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         context = this;
         setContentView(R.layout.activity_main);
+        DbBase.getInstance().Init(this);
+        NetThread.getInstance().Init(this);
         blurCover = findViewById(R.id.blur_cover);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
@@ -193,23 +197,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ib_gongneng.setOnClickListener(this);
         ib_search.setOnClickListener(this);
         ib_edit.setOnClickListener(this);
-//        editText_searchBar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                if (!hasFocus) {
-//                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-//                }
-//            }
-//        });
-
-//        lv = (ListView) findViewById(R.id.listViewNameCard);
-//
-//        //从数据库获取联系人列表/名片列表
-//        if (lv.getCount() <= 0) {
-//            WelcomeFragment.startActivity(this);
-//        }
-//        lv.setAdapter(adapter);
         blurView = findViewById(R.id.blur_layout);
         ((DrawerLayout) findViewById(R.id.id_drawerLayout)).setDrawerListener(this);
     }
