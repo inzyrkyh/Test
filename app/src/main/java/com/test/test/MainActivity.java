@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                    }
 //                });
                 // Instantiate the RequestQueue.
+                /** async task about send request
                 RequestQueue queue = Volley.newRequestQueue(MainActivity.getInstance());
                 String url = "http://42.96.138.5:8080/cgi-bin/hello.cgi";
 //                String url = "http://"+"www.baidu.com";
@@ -156,6 +157,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
 // Add the request to the RequestQueue.
                 queue.add(jsonObjectRequest);
+                 */
             }
         });
 
