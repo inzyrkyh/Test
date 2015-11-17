@@ -25,6 +25,6 @@
         swipe:swipeCloseAllItemsWhenMoveList="true"
         swipe:swipeOpenOnLongPress="false"
         swipe:swipeAnimationTime="300"
-        swipe:swipeOffsetLeft="150dp"
-        swipe:swipeOffsetRight="150dp"/>
+        swipe:swipeOffsetLeft="200dp"
+        swipe:swipeOffsetRight="200dp"/>
 </RelativeLayout>

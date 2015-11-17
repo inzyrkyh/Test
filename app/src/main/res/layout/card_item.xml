@@ -1,63 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content" android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:descendantFocusability="blocksDescendants"
+    android:id="@+id/card_item"
     >
-
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/card_name"-->
-        <!--android:text="example_name"/>-->
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/card_phone"-->
-        <!--android:text="1331333333"/>-->
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/id_card_item_front"
-        android:tag="id_card_item_front">
+        android:id="@+id/id_card_item_frame"
+        android:visibility="visible">
 
         <ImageView
-            android:id="@+id/diban01"
+            android:id="@+id/diban01_frame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/i_diban"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:adjustViewBounds="true"
+            android:visibility="invisible"
             />
+        <ImageView
+            android:id="@+id/image_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/i_touxiang005"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            />
+        </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/id_card_item_back"
+        android:tag="id_card_item_back"
+        android:layout_alignTop="@id/id_card_item_frame"
+        android:layout_alignBottom="@id/id_card_item_frame"
+        >
+
+        <ImageView
+            android:id="@+id/diban01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/i_diban"
+            android:adjustViewBounds="true" />
+
+        <ImageView
+            android:id="@+id/image_photo_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/i_touxiang005"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            />
+
+        <ImageButton
+            android:id="@+id/b_list_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/b_youjian"
+            android:layout_toRightOf="@id/image_photo_frame"
+            android:layout_alignTop="@id/image_photo_frame"
+            android:adjustViewBounds="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            />
+        <ImageButton
+            android:id="@+id/b_list_sms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/b_duanxin"
+            android:layout_toRightOf="@id/image_photo_frame"
+            android:layout_alignBottom="@id/image_photo_frame"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:scaleType="fitCenter"
+            />
+        <ImageButton
+            android:id="@+id/b_list_phonecall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/b_list_email"
+            android:background="@drawable/b_dianhua"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            />
+
+        <!--<ImageButton-->
+            <!--android:id="@+id/b_list_edit"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/b_bianji"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--/>-->
+        <!--<ImageButton-->
+            <!--android:id="@+id/b_list_delete"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/b_shanchu"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_below="@id/b_list_edit"-->
+            <!--/>-->
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/id_card_item_front"
+        android:tag="id_card_item_front">
+
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:paddingTop="2dp"
         android:paddingLeft="2dp"
         android:paddingRight="2dp"
         <ImageView
-            android:id="@+id/image_photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/i_touxiang001"
-            android:layout_alignLeft="@id/diban01"
-            android:adjustViewBounds="true"
-            />
-        <ImageView
             android:id="@+id/diban02"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/i_diban02"
-            android:scaleType="fitXY"
-            android:layout_alignParentRight="true"
-            android:layout_toRightOf="@id/image_photo"
-            android:layout_alignTop="@id/image_photo"
-            android:layout_alignBottom="@id/image_photo"
-            android:adjustViewBounds="true"
-            />
+            android:adjustViewBounds="true" />
         android:layout_alignRight="@id/diban01"
         <Button
+            android:id="@+id/b_gotoCard"
             android:layout_width="41dp"
             android:layout_height="16dp"
             android:background="@drawable/b_fasong"
@@ -70,7 +135,7 @@
             android:id="@+id/card_item_text_layout"
             android:layout_width="160dp"
             android:layout_alignLeft="@id/diban02"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="100dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             >
@@ -111,54 +176,4 @@
         </RelativeLayout>
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/id_card_item_back"
-        android:tag="id_card_item_back"
-        android:layout_alignTop="@id/id_card_item_front"
-        android:layout_alignBottom="@id/id_card_item_front"
-        >
-
-        <ImageButton
-            android:id="@+id/b_list_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:src="@drawable/b_youjian"
-            />
-        <ImageButton
-            android:id="@+id/b_list_sms"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/b_duanxin"
-            android:layout_below="@id/b_list_email"
-            />
-        <ImageButton
-            android:id="@+id/b_list_phonecall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/b_list_email"
-            android:src="@drawable/b_dianhua"
-            android:scaleType="center"
-            android:layout_alignTop="@id/b_list_email"
-            android:layout_alignBottom="@id/b_list_sms"
-            />
-
-        <ImageButton
-            android:id="@+id/b_list_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/b_bianji"
-            android:layout_alignParentRight="true"
-            />
-        <ImageButton
-            android:id="@+id/b_list_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/b_shanchu"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/b_list_edit"
-            />
-    </RelativeLayout>
 </RelativeLayout>
