@@ -8,7 +8,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,15 +28,7 @@ import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.test.test.Database.DbBase;
 import com.test.test.Model.Card;
@@ -45,10 +36,7 @@ import com.test.test.Model.CardListAdapter;
 import com.test.test.Model.ContactsHelper;
 import com.test.test.Network.NetThread;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, CreateCardFragment.OnFragmentInteractionListener, DrawerLayout.DrawerListener, View.OnTouchListener,

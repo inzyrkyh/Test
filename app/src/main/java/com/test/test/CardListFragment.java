@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
 import com.fortysevendeg.swipelistview.SwipeListView;
@@ -38,6 +39,9 @@ public class CardListFragment extends Fragment {
 //            MainActivity.lv.setOnItemClickListener(this);
 //        SwipeListView swipeListView = new SwipeListView();
 
+//            MainActivity.lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+
+
             MainActivity.lv.setSwipeListViewListener(new BaseSwipeListViewListener() {
                 int openItem = -1;
                 int lastOpenedItem = -1;
@@ -50,6 +54,7 @@ public class CardListFragment extends Fragment {
                         MainActivity.lv.closeAnimate(openItem);
                     }
                     openItem = position;
+                    MainActivity.lv.getChildAt(position).findViewById(R.id.id_card_item_back).setAlpha(1);
                 }
 
                 @Override
@@ -63,14 +68,41 @@ public class CardListFragment extends Fragment {
                     super.onClickFrontView(position);
                 }
 
-            });
-            MainActivity.lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
-                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                    CardActivity.startActivity(getActivity(), position);
-                    return false;
+                public void onClosed(int position, boolean fromRight) {
+                    Log.d("swipe", String.format("onClosed %d - fromRight %b", position, fromRight));
+                    MainActivity.lv.getChildAt(position).findViewById(R.id.id_card_item_back).setAlpha(0);
                 }
+
+                @Override
+                public void onListChanged() {
+                    Log.d("swipe", String.format("onListChanged"));
+                }
+
+                @Override
+                public void onMove(int position, float x) {
+                    Log.d("swipe", String.format("onMove %d, %f", position, x));
+                    MainActivity.lv.getChildAt(position).findViewById(R.id.id_card_item_back).setAlpha((float)(x / 100.0));
+                }
+
+                @Override
+                public void onStartOpen(int position, int action, boolean right) {
+                    Log.d("swipe", String.format("onStartOpen %d - action %d", position, action));
+                }
+
+                @Override
+                public void onClickBackView(int position) {
+                    Log.d("swipe", String.format("onClickBackView %d", position));
+                }
+
             });
+//            MainActivity.lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//                @Override
+//                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                    CardActivity.startActivity(getActivity(), position);
+//                    return false;
+//                }
+//            });
         }
         return view;
     }
