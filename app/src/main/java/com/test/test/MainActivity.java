@@ -36,6 +36,7 @@ import com.test.test.Model.CardListAdapter;
 import com.test.test.Model.ContactsHelper;
 import com.test.test.Network.NetThread;
 
+import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -185,6 +186,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ib_gongneng.setOnClickListener(this);
         ib_search.setOnClickListener(this);
         ib_edit.setOnClickListener(this);
+        ib_all_people.setOnClickListener(this);
         blurView = findViewById(R.id.blur_layout);
         ((DrawerLayout) findViewById(R.id.id_drawerLayout)).setDrawerListener(this);
     }
@@ -211,6 +213,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.button_gongneng:
                 ((DrawerLayout) findViewById(R.id.id_drawerLayout)).openDrawer(Gravity.LEFT);
+                break;
+            case R.id.button_all_people:
+                GroupActivity.startActivity(this);
                 break;
         }
     }
@@ -351,7 +356,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ContactsHelper.removeDuplicate(MainActivity.dataList);
             MainActivity.adapter.notifyDataSetChanged();
         } else if (id == R.id.nav_friend_group) {
-
+            if (adapter.getShowCheckBox()) {
+                adapter.setShowCheckBox(false);
+                adapter.notifyDataSetChanged();
+            }
+            else {
+                adapter.setShowCheckBox(true);
+                adapter.notifyDataSetChanged();
+            }
         } else if (id == R.id.nav_sync_with_cloud) {
 
         } else if (id == R.id.nav_position_share) {
