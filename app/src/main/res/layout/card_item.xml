@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
     android:descendantFocusability="blocksDescendants"
     android:id="@+id/card_item"
+    android:clipChildren="false"
     >
 
     <RelativeLayout
@@ -175,5 +176,14 @@
                 android:singleLine="true" />
         </RelativeLayout>
     </RelativeLayout>
+
+    <CheckBox
+        android:id="@+id/id_card_item_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:visibility="gone"
+         />
 
 </RelativeLayout>
