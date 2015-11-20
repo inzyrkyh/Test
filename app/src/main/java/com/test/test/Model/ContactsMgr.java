@@ -6,8 +6,16 @@ import java.util.ArrayList;
  * Created by bai on 2015/11/4.
  */
 public class ContactsMgr {
+    // group op
+    private int mGroupCount = 3;
+    public final static int GStart = 100;
+    private final static int GAll = GStart+1;
+    private final static int GFriends = GStart+2;
+    private final static int GCom = GStart+3;
+    //
     private ArrayList<Card> contacts = new ArrayList<>();
     private static ContactsMgr me = null;
+    private String mCurUserInfo = null;
     private ContactsMgr(){}
     public static ContactsMgr getInstance(){
         if ( me == null )
@@ -27,4 +35,34 @@ public class ContactsMgr {
         contacts.add(contact);
     }
     public int GetSize(){ return contacts.size(); }
+    public String GetCurUserInfo(){
+        if( mCurUserInfo == null ){
+            StringBuffer params = new StringBuffer();
+            params.append("name>>").append(new java.util.Random().nextInt(200)+100)
+                    .append("$$tel>>").append(new java.util.Random().nextInt(200)+500);
+            mCurUserInfo = params.toString();
+        }
+        return mCurUserInfo;
+    }
+
+    // group op
+    public int GetGroupCount(){
+        return mGroupCount;
+    }
+    public int newGroup(){
+        mGroupCount++;
+        return mGroupCount;
+    }
+    public void DeleteCard(int pos){
+
+    }
+    public ArrayList<Card> GetCards(int goupid){
+        ArrayList<Card> cards = new ArrayList<>();
+        for (int i=0;i<contacts.size();++i){
+            Card card = contacts.get(i);
+            if( card.IsInAGroup(goupid))
+                cards.add(card);
+        }
+        return cards;
+    }
 }

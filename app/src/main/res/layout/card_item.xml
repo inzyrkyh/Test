@@ -27,8 +27,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/i_touxiang005"
-            android:adjustViewBounds="true"
             android:scaleType="fitXY"
+            android:adjustViewBounds="true"
             />
         </RelativeLayout>
     <RelativeLayout

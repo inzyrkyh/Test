@@ -1,9 +1,14 @@
 package com.test.test.Model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * Created by MiJiefei on 2015/10/28.
  */
 public class Card {
+    private HashMap<Integer,Group> mGroups = new HashMap<>();
+    private ArrayList<Card> others;
     private String name;
     private String phoneNumber;
     private String sortKey;
@@ -71,4 +76,23 @@ public class Card {
         }
         return "#";
     }
+    // group op
+    public void AddToGroup(Group group){
+        if( group.GetGId() > ContactsMgr.GStart+ContactsMgr.getInstance().GetGroupCount() )
+            return;
+        mGroups.put(group.GetGId(),group);
+    }
+    public void DeleteFromGroup(Group group){
+        if( group.GetGId() > ContactsMgr.GStart+ContactsMgr.getInstance().GetGroupCount() )
+            return;
+        mGroups.remove(group.GetGId());
+    }
+    public boolean IsInAGroup(int gId){
+        for (int i=0;i<mGroups.size();++i){
+            if( gId == mGroups.get(i).GetGId() )
+                return true;
+        }
+        return false;
+    }
+    public HashMap<Integer,Group> GetAllGroups(){ return mGroups;}
 }

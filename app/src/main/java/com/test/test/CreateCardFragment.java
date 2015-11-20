@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.daimajia.androidviewhover.BlurLayout;
 import com.test.test.Model.Card;
+import com.test.test.Model.ContactsMgr;
 
 
 /**
@@ -146,7 +147,7 @@ public class CreateCardFragment extends Fragment implements View.OnClickListener
                     card = new Card(editTextName.getText().toString(), editTextPhone.getText().toString());
                     if (card != null) {
                         card.setMycard(isMyCard);
-                        MainActivity.dataList.add(0, card);
+                        ContactsMgr.getInstance().GetContacts().add(0, card);
                         Toast.makeText(MainActivity.getInstance(), "创建成功", Toast.LENGTH_SHORT).show();
                         FragmentTransaction transaction = getFragmentManager().beginTransaction();
                         transaction.remove(getFragmentManager().findFragmentByTag(FragmentTags.FRAGMENT_CREATE_CARD)).commit();

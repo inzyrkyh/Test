@@ -4,10 +4,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.fortysevendeg.swipelistview.SwipeListView;
+import com.test.test.Model.Card;
+import com.test.test.Model.CardListAdapter;
+import com.test.test.Model.ContactsMgr;
+import com.test.test.Model.Group;
+
+import java.util.ArrayList;
 
 public class GroupActivity extends AppCompatActivity {
+
+    public static Group testGroup;
+    private boolean isGroupEditable;
 
     private SwipeListView swipeListView;
 
@@ -23,8 +36,58 @@ public class GroupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
 
+        //test
+        testGroup = new Group();
+        testGroup.SetGId(ContactsMgr.GStart + 2);
+        testGroup.SetGName("Friends");
+
         swipeListView = (SwipeListView) findViewById(R.id.id_group_swipelistview);
-        MainActivity.adapter.setShowCheckBox(true);
+        MainActivity.adapter.setShowCheckBox(false);
         swipeListView.setAdapter(MainActivity.adapter);
+        swipeListView.setSwipeMode(SwipeListView.SWIPE_MODE_RIGHT);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MainActivity.adapter.setShowCheckBox(false);
+        swipeListView.setSwipeMode(SwipeListView.SWIPE_MODE_RIGHT);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_group_actionbar_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_rename:
+                Toast.makeText(this, "rename", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.action_edit:
+                Toast.makeText(this, "edit", Toast.LENGTH_SHORT).show();
+                isGroupEditable = !isGroupEditable;
+                if (isGroupEditable) {
+                    MainActivity.adapter.setShowCheckBox(true);
+                    swipeListView.setAdapter(MainActivity.adapter);
+                    swipeListView.setSwipeMode(SwipeListView.SWIPE_MODE_NONE);
+                }
+                else {
+                    MainActivity.adapter.setShowCheckBox(false);
+                    ArrayList<Card> newList = ContactsMgr.getInstance().GetCards(ContactsMgr.GStart + 2);
+                    CardListAdapter groupAdapter = new CardListAdapter(this, R.layout.card_item, newList);
+                    swipeListView.setAdapter(groupAdapter);
+                    swipeListView.setSwipeMode(SwipeListView.SWIPE_MODE_RIGHT);
+                }
+                return true;
+            case R.id.action_settings:
+                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

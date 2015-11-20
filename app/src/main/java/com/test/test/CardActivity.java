@@ -1,7 +1,10 @@
 package com.test.test;
 
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +16,8 @@ import com.bartoszlipinski.flippablestackview.StackPageTransformer;
 import com.test.test.Listener.SwipeDismissTouchListener;
 import com.test.test.Model.Card;
 import com.test.test.Model.CardStackAdapter;
+import com.test.test.Model.ContactsMgr;
+import com.xiaoniao.bai.mingpianjia.ShakeListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +26,14 @@ public class CardActivity extends AppCompatActivity {
 
 //    StackView stackView;
     CardStackAdapter cardStackAdapter;
+    private static CardActivity me;
     List<Card> dataList = new ArrayList<Card>();
     private List<Fragment> mViewPagerFragments;
     private int enterFromListPosition;
+    private ShakeListener mShake;
+    private SensorManager mSensorManager;
+    private CardStackFragment mStackFragment;
+    private Card mCard;
 
     public static void startActivity(Context lastContext, int position) {
         Intent intent = new Intent(lastContext, CardActivity.class);
@@ -37,6 +47,9 @@ public class CardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         enterFromListPosition = getIntent().getIntExtra("cardPosition", 0);
         setContentView(R.layout.activity_card);
+        me = this;
+        mShake = new ShakeListener(this);
+        mSensorManager = (SensorManager)getSystemService(Service.SENSOR_SERVICE);
 //        stackView = (StackView) findViewById(R.id.stackview_card);
 
 //        ContactsHelper.fetchAllContacts(this);
@@ -114,16 +127,20 @@ public class CardActivity extends AppCompatActivity {
 //        ValueInterpolator interpolatorB = new ValueInterpolator(0, NUMBER_OF_FRAGMENTS - 1, endB, startB);
 
         //demo 如果是自己的名片,展示多张名片 如果是别人的 展示一张
-        if (MainActivity.dataList.get(enterFromListPosition).getMyCard()) {
-            for (int i = 0; i < Math.min(MainActivity.dataList.size(), 4); ++i) {
-                mViewPagerFragments.add(CardStackFragment.newInstance("1", MainActivity.dataList.get(0)));
+        if (ContactsMgr.getInstance().GetContacts().get(enterFromListPosition).getMyCard()) {
+            for (int i = 0; i < Math.min(ContactsMgr.getInstance().GetContacts().size(), 4); ++i) {
+                mViewPagerFragments.add(CardStackFragment.newInstance("1", ContactsMgr.getInstance().GetContacts().get(0)));
             }
         }
         else {
-            mViewPagerFragments.add(CardStackFragment.newInstance("1", MainActivity.dataList.get(enterFromListPosition)));
+            mCard = ContactsMgr.getInstance().GetContacts().get(enterFromListPosition);
+                mStackFragment = CardStackFragment.newInstance("1", mCard);
+                mViewPagerFragments.add(mStackFragment);
         }
     }
-
+    public Card GetCard(){
+        return mCard;
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -134,5 +151,35 @@ public class CardActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         MainActivity.getInstance().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+    }
+    public void updateUI(String s){
+        if( s!=null && s!="" && mStackFragment!=null ) {
+            mStackFragment.updateUI(s);
+            UninstallListener();
+        }
+    }
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        if( mSensorManager==null || mShake==null )
+            return;
+        mSensorManager.registerListener(mShake,
+                mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        UninstallListener();
+    }
+    public static CardActivity GetInstance(){
+        return me;
+    }
+    private void UninstallListener(){
+        if( mSensorManager==null || mShake==null )
+            return;
+        mSensorManager.unregisterListener(mShake);
     }
 }

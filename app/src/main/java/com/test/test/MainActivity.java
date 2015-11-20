@@ -30,11 +30,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.fortysevendeg.swipelistview.SwipeListView;
-import com.test.test.Database.DbBase;
 import com.test.test.Model.Card;
 import com.test.test.Model.CardListAdapter;
 import com.test.test.Model.ContactsHelper;
-import com.test.test.Network.NetThread;
+import com.test.test.Model.ContactsMgr;
+import com.xiaoniao.bai.mingpianjia.AppMain;
 
 import java.security.acl.Group;
 import java.util.ArrayList;
@@ -62,8 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         context = this;
         setContentView(R.layout.activity_main);
-        DbBase.getInstance().Init(this);
-        NetThread.getInstance().Init(this);
+        AppMain.getInstance().Init(this);
         blurCover = findViewById(R.id.blur_cover);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
@@ -73,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.id_drawerLayout);
         drawer.setScrimColor(Color.parseColor("#64000000"));
 
-        adapter = new CardListAdapter(this, R.layout.card_item, dataList);
+        adapter = new CardListAdapter(this, R.layout.card_item, ContactsMgr.getInstance().GetContacts());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -353,7 +352,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         } else if (id == R.id.nav_import_contact) {
             ContactsHelper.fetchAllContacts(this);
-            ContactsHelper.removeDuplicate(MainActivity.dataList);
+            ContactsHelper.removeDuplicate(ContactsMgr.getInstance().GetContacts());
             MainActivity.adapter.notifyDataSetChanged();
         } else if (id == R.id.nav_friend_group) {
             if (adapter.getShowCheckBox()) {

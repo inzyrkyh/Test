@@ -5,15 +5,15 @@
     tools:context="com.test.test.GroupActivity">
 
     <item
-        android:id="@+id/action_compose"
+        android:id="@+id/action_rename"
         android:icon="@drawable/b_bianji"
-        android:title="@string/button_close"
+        android:title="action_rename"
         app:showAsAction="always"
         />
     <item
-        android:id="@+id/action_delete"
+        android:id="@+id/action_edit"
         android:icon="@drawable/b_bianji"
-        android:title="action_delete"
+        android:title="action_edit"
         app:showAsAction="always"/>
     <item
         android:id="@+id/action_settings"

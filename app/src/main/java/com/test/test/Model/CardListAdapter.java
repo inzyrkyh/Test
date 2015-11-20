@@ -15,6 +15,7 @@ import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -23,9 +24,12 @@ import android.widget.Toast;
 
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.test.test.CardActivity;
+import com.test.test.GroupActivity;
 import com.test.test.MainActivity;
 import com.test.test.R;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -37,9 +41,12 @@ public class CardListAdapter extends ArrayAdapter<Card> {
 
     private boolean isShowCheckBox;
 
+    private boolean[] mCheckedState;
+
     public CardListAdapter(Context context, int resource, List<Card> objects) {
         super(context, resource, objects);
         resourceID = resource;
+        mCheckedState = new boolean[5];
     }
 
     @Override
@@ -67,6 +74,7 @@ public class CardListAdapter extends ArrayAdapter<Card> {
             holder.b_sms = (ImageButton) convertView.findViewById(R.id.b_list_sms);
             holder.b_gotoCard = (Button) convertView.findViewById(R.id.b_gotoCard);
             holder.imageViewFront = (ImageView) convertView.findViewById(R.id.diban02);
+            holder.cb = (CheckBox) convertView.findViewById(R.id.id_card_item_checkbox);
             if (isShowCheckBox) {
                 showCheckBox(holder.imageViewFront);
             }
@@ -89,13 +97,6 @@ public class CardListAdapter extends ArrayAdapter<Card> {
         tvName.setText(card.getName());
 
         ((SwipeListView)parent).recycle(convertView, position);
-
-        holder.imageViewFront.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("CardList", "position = " + position);
-            }
-        });
 
         holder.b_call.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,6 +151,26 @@ public class CardListAdapter extends ArrayAdapter<Card> {
 //                return false;
 //            }
 //        });
+//        holder.imageViewFront.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("CardList", "position = " + position);
+//            }
+//        });
+
+        holder.cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mCheckedState[position] = isChecked;
+                if (isChecked) {
+                    getItem(position).AddToGroup(GroupActivity.testGroup);
+                }
+                else {
+                    getItem(position).DeleteFromGroup(GroupActivity.testGroup);
+                }
+            }
+        });
+        holder.cb.setChecked(mCheckedState[position]);
 
         return convertView;
     }
@@ -163,6 +184,7 @@ public class CardListAdapter extends ArrayAdapter<Card> {
         ImageButton b_call;
         Button b_gotoCard;
         ImageView imageViewFront;
+        CheckBox cb;
     }
 
     public void showCheckBox(View v) {
@@ -205,5 +227,22 @@ public class CardListAdapter extends ArrayAdapter<Card> {
 
     public boolean getShowCheckBox() {
         return isShowCheckBox;
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+        boolean[] tempArray = new boolean[ContactsMgr.getInstance().GetContacts().size()];
+        Log.d("Dynamic Array", "new total count is " + ContactsMgr.getInstance().GetContacts().size());
+        Log.d("Dynamic Array", "old array's length is " + mCheckedState.length);
+        for (int i = 0; i < tempArray.length; ++i) {
+            if (i < mCheckedState.length) {
+                tempArray[i] = mCheckedState[i];
+            }
+            else {
+                tempArray[i] = false;
+            }
+        }
+        mCheckedState = tempArray;
     }
 }

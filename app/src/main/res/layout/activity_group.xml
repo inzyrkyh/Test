@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.test.test.GroupActivity">
+    tools:context="com.test.test.GroupActivity"
+    android:background="@drawable/i_beijing">
 
     <com.fortysevendeg.swipelistview.SwipeListView
         xmlns:swipe="http://schemas.android.com/apk/res-auto"
@@ -15,6 +16,8 @@
         android:layout_alignParentStart="true"
         android:layout_centerHorizontal="true"
         android:divider="@android:color/transparent"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         swipe:swipeFrontView="@+id/id_card_item_front"
         swipe:swipeBackView="@+id/id_card_item_back"
         swipe:swipeActionLeft="reveal"

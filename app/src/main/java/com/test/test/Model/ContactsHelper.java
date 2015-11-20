@@ -69,41 +69,6 @@ public class ContactsHelper extends AsyncTask<String, String, String>{
         new ContactsHelper().execute();
     }
 
-    public static void fetchAllContactsWithPercent(Context context, int percentage) {
-        ContentResolver contentResolver = context.getContentResolver();
-        if (contentResolver != null) {
-            ContentResolver cr = context.getContentResolver();
-            Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
-                    null, null, null, null);
-            if (cur.getCount() > 0) {
-                while (cur.moveToNext()) {
-                    String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
-                    String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                    if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
-                        //Query phone here.  Covered next
-                        if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
-                            Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                                    null,
-                                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?",
-                                    new String[]{id}, null);
-                            while (pCur.moveToNext()) {
-                                // Do something with phones
-                                Log.d("ContactsHelper", name + " = " + pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
-                                //可以在本地通讯录创建联系人
-                                Card card = new Card(name, pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
-                                if (!MainActivity.dataList.contains(card)) {
-                                    MainActivity.dataList.add(card);
-                                }
-                            }
-                            pCur.close();
-                        }
-                    }
-                }
-            }
-            cur.close();
-        }
-    }
-
     /**
      * 通讯录去重
      * */
@@ -139,8 +104,8 @@ public class ContactsHelper extends AsyncTask<String, String, String>{
                                 Log.d("ContactsHelper", name + " = " + pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
                                 //可以在本地通讯录创建联系人
                                 Card card = new Card(name, pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
-                                if (!MainActivity.dataList.contains(card)) {
-                                    MainActivity.dataList.add(card);
+                                if (!ContactsMgr.getInstance().GetContacts().contains(card)) {
+                                    ContactsMgr.getInstance().GetContacts().add(card);
                                 }
                             }
                             pCur.close();
@@ -161,6 +126,8 @@ public class ContactsHelper extends AsyncTask<String, String, String>{
             }
             cur.close();
         }
+        removeDuplicate(ContactsMgr.getInstance().GetContacts());
+        MainActivity.adapter.notifyDataSetChanged();
         return null;
     }
 }

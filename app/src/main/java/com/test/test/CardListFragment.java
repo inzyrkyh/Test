@@ -15,6 +15,7 @@ import android.widget.ListView;
 import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.fortysevendeg.swipelistview.SwipeListViewTouchListener;
+import com.test.test.Model.CardListAdapter;
 
 /**
  * Created by MiJiefei on 2015/11/3.

@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.test.test.Listener.SwipeDismissTouchListener;
 import com.test.test.Model.Card;
+import com.test.test.Model.ContactsMgr;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +37,7 @@ public class CardStackFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private TextView mtextViewName;
 
     FrameLayout mMainLayout;
 
@@ -80,22 +82,24 @@ public class CardStackFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_card, container, false);
         Bundle bdl = getArguments();
 //        mMainLayout = (FrameLayout) v.findViewById(R.id.main_layout);
-        TextView textViewName = (TextView) v.findViewById(R.id.fragment_card_name);
-        textViewName.setText(card.getName());
+        mtextViewName = (TextView) v.findViewById(R.id.fragment_card_name);
+        mtextViewName.setText(card.getName());
         button_phone_call = (Button) v.findViewById(R.id.button_phone_call);
         button_phone_call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("button", "phone call clicked" + card.getPhoneNumber());
                 //            phone call
-            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + (card).getPhoneNumber()));
-            startActivity(intent);
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + (card).getPhoneNumber()));
+                startActivity(intent);
             }
         });
 
         return v;
     }
-
-
+    public void updateUI(String str){
+        if(str!=null && str!="" && mtextViewName!=null)
+            mtextViewName.setText(str);
+    }
 
 }
