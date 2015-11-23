@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.fortysevendeg.swipelistview.SwipeListView;
+import com.test.test.Listener.MySwipeListViewListener;
 import com.test.test.Model.Card;
 import com.test.test.Model.CardListAdapter;
 import com.test.test.Model.ContactsMgr;
@@ -21,6 +22,9 @@ public class GroupActivity extends AppCompatActivity {
 
     public static Group testGroup;
     private boolean isGroupEditable;
+
+    ArrayList<Card> groupList;
+    CardListAdapter groupAdapter;
 
     private SwipeListView swipeListView;
 
@@ -41,10 +45,24 @@ public class GroupActivity extends AppCompatActivity {
         testGroup.SetGId(ContactsMgr.GStart + 2);
         testGroup.SetGName("Friends");
 
-        swipeListView = (SwipeListView) findViewById(R.id.id_group_swipelistview);
-        MainActivity.adapter.setShowCheckBox(false);
-        swipeListView.setAdapter(MainActivity.adapter);
-        swipeListView.setSwipeMode(SwipeListView.SWIPE_MODE_RIGHT);
+        groupList = ContactsMgr.getInstance().GetCards(ContactsMgr.GStart + 2);
+        groupAdapter = new CardListAdapter(this, R.layout.card_item, groupList);
+
+        if (groupList.size() == 0) {
+            swipeListView = (SwipeListView) findViewById(R.id.id_group_swipelistview);
+            MainActivity.adapter.setShowCheckBox(true);
+            swipeListView.setAdapter(MainActivity.adapter);
+            swipeListView.setSwipeMode(SwipeListView.SWIPE_MODE_RIGHT);
+            isGroupEditable = true;
+        }
+        else {
+            swipeListView = (SwipeListView) findViewById(R.id.id_group_swipelistview);
+            swipeListView.setAdapter(groupAdapter);
+            swipeListView.setSwipeMode(SwipeListView.SWIPE_MODE_NONE);
+            isGroupEditable = false;
+        }
+
+        swipeListView.setSwipeListViewListener(new MySwipeListViewListener());
     }
 
     @Override
@@ -76,9 +94,9 @@ public class GroupActivity extends AppCompatActivity {
                     swipeListView.setSwipeMode(SwipeListView.SWIPE_MODE_NONE);
                 }
                 else {
+                    groupList = ContactsMgr.getInstance().GetCards(ContactsMgr.GStart + 2);
+                    groupAdapter = new CardListAdapter(this, R.layout.card_item, groupList);
                     MainActivity.adapter.setShowCheckBox(false);
-                    ArrayList<Card> newList = ContactsMgr.getInstance().GetCards(ContactsMgr.GStart + 2);
-                    CardListAdapter groupAdapter = new CardListAdapter(this, R.layout.card_item, newList);
                     swipeListView.setAdapter(groupAdapter);
                     swipeListView.setSwipeMode(SwipeListView.SWIPE_MODE_RIGHT);
                 }

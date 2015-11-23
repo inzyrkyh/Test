@@ -30,20 +30,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.fortysevendeg.swipelistview.SwipeListView;
-import com.test.test.Model.Card;
 import com.test.test.Model.CardListAdapter;
-import com.test.test.Model.ContactsHelper;
 import com.test.test.Model.ContactsMgr;
 import com.xiaoniao.bai.mingpianjia.AppMain;
-
-import java.security.acl.Group;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, CreateCardFragment.OnFragmentInteractionListener, DrawerLayout.DrawerListener, View.OnTouchListener,
         NavigationView.OnNavigationItemSelectedListener {
 
-    public static List<Card> dataList = new ArrayList<Card>();
+    //public static List<Card> dataList2 = new ArrayList<Card>();
 
     static AppCompatActivity context;
 
@@ -351,8 +345,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (id == R.id.nav_add_contact) {
 
         } else if (id == R.id.nav_import_contact) {
-            ContactsHelper.fetchAllContacts(this);
-            ContactsHelper.removeDuplicate(ContactsMgr.getInstance().GetContacts());
+            //ContactsHelper.fetchAllContacts(this);
+            //ContactsHelper.removeDuplicate(MainActivity.dataList);
             MainActivity.adapter.notifyDataSetChanged();
         } else if (id == R.id.nav_friend_group) {
             if (adapter.getShowCheckBox()) {

@@ -23,11 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CardActivity extends AppCompatActivity {
-
-//    StackView stackView;
     CardStackAdapter cardStackAdapter;
     private static CardActivity me;
-    List<Card> dataList = new ArrayList<Card>();
     private List<Fragment> mViewPagerFragments;
     private int enterFromListPosition;
     private ShakeListener mShake;
@@ -128,13 +125,13 @@ public class CardActivity extends AppCompatActivity {
 
         //demo 如果是自己的名片,展示多张名片 如果是别人的 展示一张
         if (ContactsMgr.getInstance().GetContacts().get(enterFromListPosition).getMyCard()) {
-            for (int i = 0; i < Math.min(ContactsMgr.getInstance().GetContacts().size(), 4); ++i) {
-                mViewPagerFragments.add(CardStackFragment.newInstance("1", ContactsMgr.getInstance().GetContacts().get(0)));
+            for (int i = 0; i < Math.min(ContactsMgr.getInstance().GetSize(), 4); ++i) {
+                mViewPagerFragments.add(CardStackFragment.newInstance("1", ContactsMgr.getInstance().GetContactItem(0)));
             }
         }
         else {
-            mCard = ContactsMgr.getInstance().GetContacts().get(enterFromListPosition);
-                mStackFragment = CardStackFragment.newInstance("1", mCard);
+            mCard = ContactsMgr.getInstance().GetContactItem(enterFromListPosition);
+            mStackFragment = CardStackFragment.newInstance("1", mCard);
                 mViewPagerFragments.add(mStackFragment);
         }
     }

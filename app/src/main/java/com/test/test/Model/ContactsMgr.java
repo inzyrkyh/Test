@@ -1,6 +1,9 @@
 package com.test.test.Model;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by bai on 2015/11/4.
@@ -44,14 +47,21 @@ public class ContactsMgr {
         }
         return mCurUserInfo;
     }
-
+//    public static List<Card> removeDuplicate(List<Card> list) {
+//        Set<Card> set = new LinkedHashSet<Card>();
+//        set.addAll(list);
+//        list.clear();
+//        list.addAll(set);
+//        return list;
+//    }
     // group op
     public int GetGroupCount(){
         return mGroupCount;
     }
-    public int newGroup(){
+    public int newGroup(String GName){
         mGroupCount++;
-        return mGroupCount;
+        // save to db;
+        return GetGroupCount()+GStart;
     }
     public void DeleteCard(int pos){
 

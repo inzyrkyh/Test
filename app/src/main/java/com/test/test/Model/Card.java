@@ -2,6 +2,8 @@ package com.test.test.Model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by MiJiefei on 2015/10/28.
@@ -88,10 +90,11 @@ public class Card {
         mGroups.remove(group.GetGId());
     }
     public boolean IsInAGroup(int gId){
-        for (int i=0;i<mGroups.size();++i){
-            if( gId == mGroups.get(i).GetGId() )
+        for( HashMap.Entry<Integer,Group> entry : mGroups.entrySet() ){
+            if( gId == entry.getKey() )
                 return true;
         }
+//            Object val = entry.getValue();
         return false;
     }
     public HashMap<Integer,Group> GetAllGroups(){ return mGroups;}

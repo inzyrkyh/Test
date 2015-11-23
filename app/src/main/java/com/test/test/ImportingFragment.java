@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,10 +14,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.test.test.CardListFragment;
-import com.test.test.Model.ContactsHelper;
-import com.test.test.R;
 
 /**
  * Created by MiJiefei on 2015/11/2.
@@ -34,7 +31,7 @@ public class ImportingFragment extends Fragment implements View.OnClickListener 
     Button button_close;
     ImageView imageIndicate;
 
-    public Handler mHandler = new Handler() {
+    private Handler mHandler = new Handler() {
 
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
@@ -85,17 +82,31 @@ public class ImportingFragment extends Fragment implements View.OnClickListener 
         button_backup_on_cloud.setOnClickListener(this);
         button_close.setOnClickListener(this);
         mHandler.sendEmptyMessage(MSG_PROGRESS_UPDATE);
-        ContactsHelper.fetchAllContacts(MainActivity.getInstance());
-//        ContactsHelper.removeDuplicate(MainActivity.dataList);
-//        MainActivity.adapter.notifyDataSetChanged();
-//        ContactsHelper.fetchAllContacts(this.getActivity());
-//        ContactsHelper.removeDuplicate(MainActivity.dataList);
-//        MainActivity.adapter.notifyDataSetChanged();
         context = this;
         MainActivity.hideBlurCover();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int loop = 0;
+                do {
+                    progressRun(loop);
+                    try {
+                        Thread.sleep(30);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }while (loop++ <= 100);
+            }
+        }).start();
         return view;
     }
 
+    private void progressRun(int x){
+        Message msg = new Message();
+        msg.what = MSG_PROGRESS_UPDATE;
+        msg.arg1 = x;
+        mHandler.sendMessage(msg);
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

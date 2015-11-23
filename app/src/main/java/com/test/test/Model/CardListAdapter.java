@@ -41,12 +41,12 @@ public class CardListAdapter extends ArrayAdapter<Card> {
 
     private boolean isShowCheckBox;
 
-    private boolean[] mCheckedState;
+    //private boolean[] mCheckedState;
 
     public CardListAdapter(Context context, int resource, List<Card> objects) {
         super(context, resource, objects);
         resourceID = resource;
-        mCheckedState = new boolean[5];
+        //mCheckedState = new boolean[5];
     }
 
     @Override
@@ -161,7 +161,7 @@ public class CardListAdapter extends ArrayAdapter<Card> {
         holder.cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mCheckedState[position] = isChecked;
+//                mCheckedState[position] = isChecked;
                 if (isChecked) {
                     getItem(position).AddToGroup(GroupActivity.testGroup);
                 }
@@ -170,7 +170,7 @@ public class CardListAdapter extends ArrayAdapter<Card> {
                 }
             }
         });
-        holder.cb.setChecked(mCheckedState[position]);
+//        holder.cb.setChecked(mCheckedState[position]);
 
         return convertView;
     }
@@ -229,20 +229,20 @@ public class CardListAdapter extends ArrayAdapter<Card> {
         return isShowCheckBox;
     }
 
-    @Override
-    public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
-        boolean[] tempArray = new boolean[ContactsMgr.getInstance().GetContacts().size()];
-        Log.d("Dynamic Array", "new total count is " + ContactsMgr.getInstance().GetContacts().size());
-        Log.d("Dynamic Array", "old array's length is " + mCheckedState.length);
-        for (int i = 0; i < tempArray.length; ++i) {
-            if (i < mCheckedState.length) {
-                tempArray[i] = mCheckedState[i];
-            }
-            else {
-                tempArray[i] = false;
-            }
-        }
-        mCheckedState = tempArray;
-    }
+//    @Override
+//    public void notifyDataSetChanged() {
+//        super.notifyDataSetChanged();
+//        boolean[] tempArray = new boolean[ContactsMgr.getInstance().GetSize()];
+//        Log.d("Dynamic Array", "new total count is " + ContactsMgr.getInstance().GetSize());
+//        Log.d("Dynamic Array", "old array's length is " + mCheckedState.length);
+//        for (int i = 0; i < tempArray.length; ++i) {
+//            if (i < mCheckedState.length) {
+//                tempArray[i] = mCheckedState[i];
+//            }
+//            else {
+//                tempArray[i] = false;
+//            }
+//        }
+//        mCheckedState = tempArray;
+//    }
 }
