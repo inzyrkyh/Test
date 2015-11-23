@@ -45,7 +45,7 @@ public class CardListFragment extends Fragment {
 
 //            MainActivity.lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 
-            MainActivity.lv.setSwipeListViewListener(new MySwipeListViewListener());
+            MainActivity.lv.setSwipeListViewListener(new MySwipeListViewListener(MainActivity.lv));
 //            MainActivity.lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 //                @Override
 //                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {

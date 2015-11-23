@@ -3,6 +3,7 @@ package com.test.test;
 import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -19,19 +20,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v8.renderscript.Allocation;
 import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
+import android.text.Layout;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.Toast;
 
+import com.DevsmartLib.HorizontalListView;
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.test.test.Model.CardListAdapter;
 import com.test.test.Model.ContactsMgr;
+import com.test.test.Model.Group;
+import com.test.test.Model.GroupAdapter;
 import com.xiaoniao.bai.mingpianjia.AppMain;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, CreateCardFragment.OnFragmentInteractionListener, DrawerLayout.DrawerListener, View.OnTouchListener,
@@ -49,6 +61,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static View blurView;
     public static View blurCover;
+
+    private PopupWindow popupWindow;
+    private View view;
+    private HorizontalListView lv_group;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,7 +224,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ((DrawerLayout) findViewById(R.id.id_drawerLayout)).openDrawer(Gravity.LEFT);
                 break;
             case R.id.button_all_people:
-                GroupActivity.startActivity(this);
+//                GroupActivity.startActivity(this);
+                showWindow(v);
                 break;
         }
     }
@@ -381,5 +398,56 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void showWindow(View parent) {
+
+        if (popupWindow == null) {
+            LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            view = layoutInflater.inflate(R.layout.group_list, null);
+
+            lv_group = (HorizontalListView) view.findViewById(R.id.id_group_listview);
+            // 加载数据
+
+            GroupAdapter groupAdapter = new GroupAdapter(this, ContactsMgr.getInstance().getGroups());
+            lv_group.setAdapter(groupAdapter);
+            // 创建一个PopuWidow对象
+            popupWindow = new PopupWindow(view, 600, 200);
+        }
+
+        // 使其聚集
+        popupWindow.setFocusable(true);
+        // 设置允许在外点击消失
+        popupWindow.setOutsideTouchable(true);
+
+        // 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        // 显示的位置为:屏幕的宽度的一半-PopupWindow的高度的一半
+        int xPos = windowManager.getDefaultDisplay().getWidth() / 2
+                - popupWindow.getWidth() / 2;
+        Log.i("coder", "xPos:" + xPos);
+
+        popupWindow.showAsDropDown(parent, xPos, 0);
+
+        lv_group.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view,
+                                    int position, long id) {
+
+                Toast.makeText(MainActivity.getInstance(),
+                        ContactsMgr.getInstance().getGroups().get(position).GetGName(), Toast.LENGTH_SHORT)
+                        .show();
+                Log.d("group", "group = "+position + " id = " + id);
+
+                if (popupWindow != null) {
+                    popupWindow.dismiss();
+                }
+
+                GroupActivity.startActivity(MainActivity.getInstance(), position);
+            }
+        });
     }
 }

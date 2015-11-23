@@ -28,6 +28,11 @@ public class Utils {
             return null;
         return info.getMacAddress();
     }
+    public static int RandomInt(int Min,int Max){
+        if( Min < 0 || Max < Min )
+            return AppConstants.iRetError;
+        return new java.util.Random().nextInt(Max-Min+1)+Min;
+    }
     public static long GetCurSecondTime(){
         return Calendar.getInstance().getTimeInMillis()/1000;
     }

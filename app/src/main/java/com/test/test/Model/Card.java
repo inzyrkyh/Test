@@ -20,14 +20,22 @@ public class Card {
         name = "";
         phoneNumber = "";
         mycard = false;
+        InitDefaultGroup();
     }
 
     public Card(String name, String phoneNumber) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         mycard = false;
+        InitDefaultGroup();
     }
 
+    private void InitDefaultGroup(){
+        Group group = new Group();
+        group.SetGId(ContactsMgr.GAll);
+        ContactsMgr.getInstance().addGroup(group);
+        this.AddToGroup(group);
+    }
     public void setName(String name) {
         this.name = name;
     }

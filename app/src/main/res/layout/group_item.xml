@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/id_group_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/i_touxiang001"
+        />
+
+    <TextView
+        android:id="@+id/id_group_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/id_group_icon"
+        android:layout_centerHorizontal="true"
+        android:text="TestGroupasasas"
+        android:ellipsize="marquee"
+        android:maxLength="9"
+        android:textSize="17sp"
+        />
+</RelativeLayout>
