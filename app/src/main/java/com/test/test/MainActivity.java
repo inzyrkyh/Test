@@ -413,7 +413,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             GroupAdapter groupAdapter = new GroupAdapter(this, ContactsMgr.getInstance().getGroups());
             lv_group.setAdapter(groupAdapter);
             // 创建一个PopuWidow对象
-            popupWindow = new PopupWindow(view, 600, 200);
+            popupWindow = new PopupWindow(view, 800, 200);
         }
 
         // 使其聚集
