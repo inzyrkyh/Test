@@ -163,7 +163,23 @@ public class CardListAdapter extends ArrayAdapter<Card> {
                 }
             }
         });
-//        holder.cb.setChecked(mCheckedState[position]);
+
+//        int wantedPosition = position; // Whatever position you're looking for
+//        int firstPosition = ((SwipeListView)parent).getFirstVisiblePosition() - ((SwipeListView)parent).getHeaderViewsCount(); // This is the same as child #0
+//        int wantedChild = wantedPosition - firstPosition;
+//// Say, first visible position is 8, you want position 10, wantedChild will now be 2
+//// So that means your view is child #2 in the ViewGroup:
+//        if (wantedChild < 0 || wantedChild >= (parent).getChildCount()) {
+//            Log.w("Test view", "Unable to get view for desired position, because it's not being displayed on screen.");
+//        }
+//        else {
+//// Could also check if wantedPosition is between listView.getFirstVisiblePosition() and listView.getLastVisiblePosition() instead.
+//            View wantedView = (parent).getChildAt(wantedChild);
+//            ((CheckBox)wantedView.findViewById(R.id.id_card_item_checkbox)).setChecked(getItem(position).IsInAGroup(GroupActivity.currentGroup.GetGId()));
+//        }
+        if (GroupActivity.currentGroup != null) {
+            holder.cb.setChecked(getItem(position).IsInAGroup(GroupActivity.currentGroup.GetGId()));
+        }
 
         return convertView;
     }

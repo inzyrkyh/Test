@@ -16,4 +16,17 @@ public class Group {
     public void SetGId(int gid){ GId = gid; }
     public String GetGName(){return GName;}
     public void SetGName(String s){ GName = s;}
+
+    @Override
+    public boolean equals(Object object) {
+        boolean sameSame = false;
+
+        if (object != null && object instanceof Group)
+        {
+            if (this.GName.equals(((Group) object).GetGName()) || this.GId == ((Group) object).GId) {
+                sameSame = true;
+            }
+        }
+        return sameSame;
+    }
 }

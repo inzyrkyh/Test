@@ -138,20 +138,20 @@ public class HttpClientBase {
         InputStream inputStream = null;
         try {
             inputStream = httpURLConnection.getInputStream();
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            mReader = new BufferedReader(inputStreamReader);
         } catch (IOException e) {
             Log.i("MyLog", "read.IOException error:" + e.getMessage());
         }
-        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-        mReader = new BufferedReader(inputStreamReader);
     }
     private void createWriter(){
         OutputStream outputStream = null;
         try {
             outputStream = httpURLConnection.getOutputStream();
+            //mWriter = new OutputStreamWriter(outputStream);
+            mWriter = new PrintWriter(outputStream);
         } catch (IOException e) {
             Log.i("MyLog", "write.IOException error:" + e.getMessage());
         }
-        //mWriter = new OutputStreamWriter(outputStream);
-        mWriter = new PrintWriter(outputStream);
     }
 }

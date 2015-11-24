@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/id_add_group"
             android:layout_centerHorizontal="true"
-            android:text="Add friend"/>
+            android:text="Add group"/>
     </RelativeLayout>
 
     <com.DevsmartLib.HorizontalListView

@@ -28,7 +28,7 @@ public class testActivity extends Activity{
         mtextView.setText(this.getIntent().getStringExtra(AppConstants.TestKey));
 
         me = this;
-        updateUI(ContactsMgr.getInstance().GetCurUserInfo());
+        //updateUI(ContactsMgr.getInstance().GetCurUserInfo());
 //        mShake = new ShakeListener(this);
 //        mSensorManager = (SensorManager)getSystemService(Service.SENSOR_SERVICE);
     }

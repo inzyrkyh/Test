@@ -22,7 +22,7 @@ public class ContactsMgr {
     private ArrayList<Card> contacts = new ArrayList<>();
     private ArrayList<Group> groups = new ArrayList<>();
     private static ContactsMgr me = null;
-    private String mCurUserInfo = null;
+    private Card meCard = null;
     private ContactsMgr(){}
     public static ContactsMgr getInstance(){
         if ( me == null )
@@ -39,32 +39,41 @@ public class ContactsMgr {
         return contacts.get(pos);
     }
     public void AddContact(Card contact){
-        int Gid = Utils.RandomInt(GStart+1,GStart+GetGroupCount());
-        if( Gid!= AppConstants.iRetError && Gid!=GAll ) {
-            Group group = new Group();
-            group.SetGId(Gid);
-//            addGroup(group);
-            contact.AddToGroup(group);
+        Card card = IsHaveThisCard(contact);
+        if( card == null )
+        {
+            int Gid = Utils.RandomInt(GStart+1,GStart+GetGroupCount());
+            if( Gid!= AppConstants.iRetError && Gid!=GAll ) {
+                Group group = new Group();
+                group.SetGId(Gid);
+                addGroup(group);
+                contact.AddToGroup(group);
+            }
+            contacts.add(contact);
         }
-        contacts.add(contact);
+        else
+            contact.AddOtherCard(card);
+    }
+    private Card IsHaveThisCard(Card card){
+        for (Card card0:GetContacts()){
+            if( card0.getName().equals(card.getName()))
+                return card0;
+        }
+        return null;
+    }
+    public Card GetMeCard(){
+        return meCard;
+    }
+    public void SetMeCard(Card card){
+        if( meCard == null )
+        {
+            meCard = card;
+            contacts.add(0,meCard);
+        }
+        else
+            meCard.AddOtherCard(card);
     }
     public int GetSize(){ return contacts.size(); }
-    public String GetCurUserInfo(){
-        if( mCurUserInfo == null ){
-            StringBuffer params = new StringBuffer();
-            params.append("name>>").append(new java.util.Random().nextInt(200)+100)
-                    .append("$$tel>>").append(new java.util.Random().nextInt(200)+500);
-            mCurUserInfo = params.toString();
-        }
-        return mCurUserInfo;
-    }
-//    public static List<Card> removeDuplicate(List<Card> list) {
-//        Set<Card> set = new LinkedHashSet<Card>();
-//        set.addAll(list);
-//        list.clear();
-//        list.addAll(set);
-//        return list;
-//    }
     // group op
     public int GetGroupCount(){
         return mGroupCount;
@@ -108,6 +117,10 @@ public class ContactsMgr {
     }
 
     public void addGroup(Group group) {
+        for (Group group1:groups) {
+            if (group1.equals(group))
+                return;
+        }
         groups.add(group);
     }
 }

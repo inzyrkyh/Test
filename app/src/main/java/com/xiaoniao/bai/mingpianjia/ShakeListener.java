@@ -38,7 +38,7 @@ public class ShakeListener implements SensorEventListener {
             float[] values = event.values;
             if ((Math.abs(values[0]) > mShakevalue || Math.abs(values[1]) > mShakevalue || Math.abs(values[2]) > mShakevalue)) {
             	vibrator.vibrate(200);
-                String str = CardActivity.GetInstance().GetCard().getName();
+                String str = CardActivity.GetInstance().GetCurCard().getName();
                 NetPacket.getInstance().AddSendPacket(BaiMsg.getInstance().CreateMsgYao(str));
                 mShakeLastTime = Utils.GetCurTimeInMillis();
                 //NetPacket.getInstance().AddSendPacket("key="+JsonTools.getInstance().GetMsg2(JsonTools.mYao));

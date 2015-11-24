@@ -476,11 +476,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View v) {
                 Log.d("group", "addgroup");
 
-//                if (popupWindow != null) {
-//                    popupWindow.dismiss();
-//                }
+                if (popupWindow != null) {
+                    popupWindow.dismiss();
+                }
 
-//                GroupActivity.startActivity(MainActivity.getInstance(), -1);
+                GroupActivity.startActivity(MainActivity.getInstance(), -1);
             }
         });
     }

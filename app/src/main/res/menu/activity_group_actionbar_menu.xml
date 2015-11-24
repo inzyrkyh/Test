@@ -7,8 +7,8 @@
     <item
         android:id="@+id/action_rename"
         android:icon="@drawable/b_bianji"
+        app:showAsAction="ifRoom|collapseActionView"
         android:title="action_rename"
-        app:showAsAction="always"
         />
     <item
         android:id="@+id/action_edit"
@@ -20,5 +20,12 @@
         android:icon="@drawable/b_bianji"
         android:title="action_settings"
         app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_edit_text"
+        android:actionViewClass="android.widget.EditText"
+        android:title="Rename title"
+        android:showAsAction="collapseActionView"
+        />
 
 </menu>

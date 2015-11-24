@@ -7,6 +7,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -33,7 +34,7 @@ public class CardActivity extends AppCompatActivity {
     private ShakeListener mShake;
     private SensorManager mSensorManager;
     private CardStackFragment mStackFragment;
-    private Card mCard;
+    private int mPage = -1;
 
     public static void startActivity(Context lastContext, int position) {
         Intent intent = new Intent(lastContext, CardActivity.class);
@@ -50,30 +51,28 @@ public class CardActivity extends AppCompatActivity {
         me = this;
         mShake = new ShakeListener(this);
         mSensorManager = (SensorManager)getSystemService(Service.SENSOR_SERVICE);
-//        stackView = (StackView) findViewById(R.id.stackview_card);
-
-//        ContactsHelper.fetchAllContacts(this);
-//        List<Map<String,Object>> listItems=new ArrayList<Map<String,Object>>();
-//        此处应调用自己的名片数据
-//        for(int i=0;i < 4;i++)
-//        {
-////            Map<String,Object> listItem=new HashMap<String,Object>();
-////            listItem.put("image",MainActivity.dataList.get(i));
-////            listItems.add(listItem);
-//            dataList.add(MainActivity.dataList.get(i));
-//        }
-//        cardStackAdapter = new CardStackAdapter(this, R.layout.fragment_card, dataList);
-////        SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems, R.id.stackview_card, new String[]{"image"},new int[]{R.id.stackview_card} );
-//        stackView.setAdapter(cardStackAdapter);
 
         final FlippableStackView stack = (FlippableStackView) findViewById(R.id.stackview_card);
         stack.initStack(2, StackPageTransformer.Orientation.HORIZONTAL);
         createViewPagerFragments();
         cardStackAdapter = new CardStackAdapter(getSupportFragmentManager(), mViewPagerFragments);
         stack.setAdapter(cardStackAdapter);
+        stack.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-//        RelativeLayout layout = (RelativeLayout) stack.findViewById(R.id.card_layout);
+            }
 
+            @Override
+            public void onPageSelected(int position) {
+                mPage = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         SwipeDismissTouchListener touchListener =
                 new SwipeDismissTouchListener(
                         stack,
@@ -86,9 +85,7 @@ public class CardActivity extends AppCompatActivity {
 
                             @Override
                             public void onDismiss(View view, Object token) {
-//                                stack.removeView(stack);
-                                //used to do send action, do some http request, etc.
-                                NetPacket.getInstance().AddSendPacket(BaiMsg.getInstance().CreateMsgBroadcast(GetCard().getName()));
+                                NetPacket.getInstance().AddSendPacket(BaiMsg.getInstance().CreateMsgBroadcast(GetCurCard().getName()));
                             }
 
 //                            @Override
@@ -108,6 +105,12 @@ public class CardActivity extends AppCompatActivity {
         stack.setOnTouchListener(touchListener);
     }
 
+    public Card GetCurCard(){
+        Card card = ContactsMgr.getInstance().GetContactItem(enterFromListPosition);
+        if( mPage > 0 )
+            card = card.GetOtherOne(mPage-1);
+        return card;
+    }
     private void createViewPagerFragments() {
         mViewPagerFragments = new ArrayList<>();
 
@@ -126,22 +129,18 @@ public class CardActivity extends AppCompatActivity {
 //        ValueInterpolator interpolatorB = new ValueInterpolator(0, NUMBER_OF_FRAGMENTS - 1, endB, startB);
 
         //demo 如果是自己的名片,展示多张名片 如果是别人的 展示一张
-        if (ContactsMgr.getInstance().GetContacts().get(enterFromListPosition).getMyCard()) {
-            for (int i = 0; i < Math.min(ContactsMgr.getInstance().GetSize(), 4); ++i) {
-                mViewPagerFragments.add(CardStackFragment.newInstance("1", ContactsMgr.getInstance().GetContactItem(0)));
-            }
-        }
-        else {
-            mCard = ContactsMgr.getInstance().GetContactItem(enterFromListPosition);
+        Card mainCard = ContactsMgr.getInstance().GetContactItem(enterFromListPosition);
+        if ( mainCard!=null ) {
+            mPage = 0;
+            mViewPagerFragments.add(CardStackFragment.newInstance("1", mainCard ) );
             String name = this.getIntent().getStringExtra(AppConstants.TestKey);
             if( name != null )
-                mCard.setName(name);
-            mStackFragment = CardStackFragment.newInstance("1", mCard);
-                mViewPagerFragments.add(mStackFragment);
+                mainCard.setName(name);
+            for (int i = 0; i < mainCard.OtherSize(); ++i) {
+                mPage +=1;
+                mViewPagerFragments.add(CardStackFragment.newInstance("1", mainCard.GetOtherOne(i) ));
+            }
         }
-    }
-    public Card GetCard(){
-        return mCard;
     }
     @Override
     protected void onDestroy() {

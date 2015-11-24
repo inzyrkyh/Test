@@ -10,29 +10,45 @@ import java.util.Map;
  */
 public class Card {
     private HashMap<Integer,Group> mGroups = new HashMap<>();
-    private ArrayList<Card> others;
+    private ArrayList<Card> others = null;
     private String name;
     private String phoneNumber;
     private String sortKey;
-    private boolean mycard;
 
     public Card() {
         name = "";
         phoneNumber = "";
-        mycard = false;
         InitDefaultGroup();
     }
 
     public Card(String name, String phoneNumber) {
         this.name = name;
         this.phoneNumber = phoneNumber;
-        mycard = false;
         InitDefaultGroup();
     }
 
+    public void AddOtherCard(Card card){
+        if( others == null )
+            others = new ArrayList<>();
+        others.add(card);
+    }
+    public ArrayList<Card> GetAllOthers(){
+        return others;
+    }
+    public Card GetOtherOne( int pos ){
+        if( others == null || pos >= others.size() )
+            return null;
+        return others.get(pos);
+    }
+    public int OtherSize(){
+        if( others == null )
+            return 0;
+        return others.size();
+    }
     private void InitDefaultGroup(){
         Group group = new Group();
         group.SetGId(ContactsMgr.GAll);
+        group.SetGName("所有人");
         ContactsMgr.getInstance().addGroup(group);
         this.AddToGroup(group);
     }
@@ -52,8 +68,6 @@ public class Card {
         return phoneNumber;
     }
 
-    public boolean getMyCard() {return mycard;}
-
     @Override
     public boolean equals(Object object) {
         boolean sameSame = false;
@@ -66,11 +80,6 @@ public class Card {
         }
         return sameSame;
     }
-
-    public void setMycard(boolean value) {
-        mycard = value;
-    }
-
     public String getSortKey() {
         return sortKey;
     }
@@ -95,14 +104,14 @@ public class Card {
     public void DeleteFromGroup(Group group){
         if( group.GetGId() > ContactsMgr.GStart+ContactsMgr.getInstance().GetGroupCount() )
             return;
-        mGroups.remove(group.GetGId());
+        //if( mGroups.get(group.GetGId()) == null )
+            mGroups.remove(group.GetGId());
     }
     public boolean IsInAGroup(int gId){
         for( HashMap.Entry<Integer,Group> entry : mGroups.entrySet() ){
             if( gId == entry.getKey() )
                 return true;
         }
-//            Object val = entry.getValue();
         return false;
     }
     public HashMap<Integer,Group> GetAllGroups(){ return mGroups;}

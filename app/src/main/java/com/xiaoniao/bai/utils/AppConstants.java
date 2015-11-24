@@ -11,6 +11,6 @@ public class AppConstants {
     //public static String AppUrl1 = "http://42.96.138.5:8080/cgi-bin/hello.cgi";
     //public static String AppUrl2 = "http://192.168.2.99:80/cgi-bin/hello.cgi";
     public static String AppUrl1 = "http://192.168.2.200:9785/MyHellTest/MianPian";
-    //public static String AppUrl2 = "http://192.168.2.200:9785/MyHellTest/hi";
+    //public static String AppUrl1 = "http://42.96.138.5:9785/MyHellTest/MianPian";
     public static String NetGetKey = "NetGetKey";
 }
