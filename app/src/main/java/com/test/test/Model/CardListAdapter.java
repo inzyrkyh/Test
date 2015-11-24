@@ -4,14 +4,10 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -20,7 +16,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.test.test.CardActivity;
@@ -28,8 +23,6 @@ import com.test.test.GroupActivity;
 import com.test.test.MainActivity;
 import com.test.test.R;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -163,10 +156,10 @@ public class CardListAdapter extends ArrayAdapter<Card> {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 //                mCheckedState[position] = isChecked;
                 if (isChecked) {
-                    getItem(position).AddToGroup(GroupActivity.testGroup);
+                    getItem(position).AddToGroup(GroupActivity.currentGroup);
                 }
                 else {
-                    getItem(position).DeleteFromGroup(GroupActivity.testGroup);
+                    getItem(position).DeleteFromGroup(GroupActivity.currentGroup);
                 }
             }
         });

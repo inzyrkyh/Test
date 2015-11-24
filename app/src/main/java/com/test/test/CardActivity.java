@@ -18,6 +18,9 @@ import com.test.test.Model.Card;
 import com.test.test.Model.CardStackAdapter;
 import com.test.test.Model.ContactsMgr;
 import com.xiaoniao.bai.mingpianjia.ShakeListener;
+import com.xiaoniao.bai.net.BaiMsg;
+import com.xiaoniao.bai.net.NetPacket;
+import com.xiaoniao.bai.utils.AppConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +88,7 @@ public class CardActivity extends AppCompatActivity {
                             public void onDismiss(View view, Object token) {
 //                                stack.removeView(stack);
                                 //used to do send action, do some http request, etc.
-                                Log.d("Send Action", "Sending card");
+                                NetPacket.getInstance().AddSendPacket(BaiMsg.getInstance().CreateMsgBroadcast(GetCard().getName()));
                             }
 
 //                            @Override
@@ -103,7 +106,6 @@ public class CardActivity extends AppCompatActivity {
                         });
         touchListener.setOrientation(SwipeDismissTouchListener.SWIPE_VERTICAL);
         stack.setOnTouchListener(touchListener);
-
     }
 
     private void createViewPagerFragments() {
@@ -131,6 +133,9 @@ public class CardActivity extends AppCompatActivity {
         }
         else {
             mCard = ContactsMgr.getInstance().GetContactItem(enterFromListPosition);
+            String name = this.getIntent().getStringExtra(AppConstants.TestKey);
+            if( name != null )
+                mCard.setName(name);
             mStackFragment = CardStackFragment.newInstance("1", mCard);
                 mViewPagerFragments.add(mStackFragment);
         }

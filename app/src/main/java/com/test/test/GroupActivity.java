@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class GroupActivity extends AppCompatActivity {
 
-    public static Group testGroup;
+    public static Group currentGroup;
     private boolean isGroupEditable;
 
     ArrayList<Card> groupList;
@@ -42,15 +42,20 @@ public class GroupActivity extends AppCompatActivity {
 
         int index = getIntent().getIntExtra("groupIndex", 0);
         //test
-        testGroup = ContactsMgr.getInstance().getGroups().get(index);
-//        testGroup = ContactsMgr.getInstance().newGroup("Friends");
-        setTitle(testGroup.GetGName());
+        if (index != -1) {
+            currentGroup = ContactsMgr.getInstance().getGroups().get(index);
+//        currentGroup = ContactsMgr.getInstance().newGroup("Friends");
+            setTitle(currentGroup.GetGName());
+        }
+        else {
+
+        }
 //        getActionBar().setHomeButtonEnabled(true);
 //        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         swipeListView = (SwipeListView) findViewById(R.id.id_group_swipelistview);
 
-        groupList = ContactsMgr.getInstance().GetCards(testGroup.GetGId());
+        groupList = ContactsMgr.getInstance().GetCards(currentGroup.GetGId());
         groupAdapter = new CardListAdapter(this, R.layout.card_item, groupList);
 
 
@@ -98,7 +103,7 @@ public class GroupActivity extends AppCompatActivity {
                     swipeListView.setSwipeMode(SwipeListView.SWIPE_MODE_NONE);
                 }
                 else {
-                    groupList = ContactsMgr.getInstance().GetCards(testGroup.GetGId());
+                    groupList = ContactsMgr.getInstance().GetCards(currentGroup.GetGId());
                     groupAdapter = new CardListAdapter(this, R.layout.card_item, groupList);
                     MainActivity.adapter.setShowCheckBox(false);
                     swipeListView.setAdapter(groupAdapter);

@@ -34,10 +34,10 @@ public class NetThread extends Thread{
         if( isNetOk() )
            me.start();
     }
-    public void NetStop(){
-        bRun = false;
-        HttpClientBase.getInstance().disconnect();
-    }
+//    public void NetStop(){
+//        bRun = false;
+//        HttpClientBase.getInstance().disconnect();
+//    }
 
     @Override
     public synchronized void run() {

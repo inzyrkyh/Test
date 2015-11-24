@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -20,7 +21,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v8.renderscript.Allocation;
 import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
-import android.text.Layout;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -32,26 +32,32 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.DevsmartLib.HorizontalListView;
 import com.fortysevendeg.swipelistview.SwipeListView;
+import com.test.test.CardActivity;
+import com.test.test.CreateCardFragment;
+import com.test.test.FragmentTags;
+import com.test.test.GroupActivity;
 import com.test.test.Model.CardListAdapter;
 import com.test.test.Model.ContactsMgr;
-import com.test.test.Model.Group;
 import com.test.test.Model.GroupAdapter;
+import com.test.test.R;
+import com.test.test.WelcomeFragment;
 import com.xiaoniao.bai.mingpianjia.AppMain;
+import com.xiaoniao.bai.net.NetPacket;
+import com.xiaoniao.bai.utils.AppConstants;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, CreateCardFragment.OnFragmentInteractionListener, DrawerLayout.DrawerListener, View.OnTouchListener,
         NavigationView.OnNavigationItemSelectedListener {
 
     //public static List<Card> dataList2 = new ArrayList<Card>();
 
-    static AppCompatActivity context;
+    static MainActivity context;
 
     public static SwipeListView lv;
     public static CardListAdapter adapter;
@@ -65,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private PopupWindow popupWindow;
     private View view;
     private HorizontalListView lv_group;
+    private ImageButton button_addGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,15 +207,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ((DrawerLayout) findViewById(R.id.id_drawerLayout)).setDrawerListener(this);
     }
 
-    public static AppCompatActivity getInstance() {
+    public static MainActivity getInstance() {
         return context;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        NetPacket.getInstance().startRcvBroadcast();
     }
 
+    public void showCard(String info){
+        Intent intent = new Intent(MainActivity.this, CardActivity.class);
+        intent.putExtra("cardPosition", 0);
+        intent.putExtra(AppConstants.TestKey, info);
+        startActivity(intent);
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+        NetPacket.getInstance().stopRcvBroadcast();
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -224,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ((DrawerLayout) findViewById(R.id.id_drawerLayout)).openDrawer(Gravity.LEFT);
                 break;
             case R.id.button_all_people:
-//                GroupActivity.startActivity(this);
+                //                GroupActivity.startActivity(this);
                 showWindow(v);
                 break;
         }
@@ -407,13 +426,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             view = layoutInflater.inflate(R.layout.group_list, null);
 
+            button_addGroup = (ImageButton) view.findViewById(R.id.id_add_group);
+
             lv_group = (HorizontalListView) view.findViewById(R.id.id_group_listview);
             // 加载数据
 
             GroupAdapter groupAdapter = new GroupAdapter(this, ContactsMgr.getInstance().getGroups());
             lv_group.setAdapter(groupAdapter);
             // 创建一个PopuWidow对象
-            popupWindow = new PopupWindow(view, 800, 200);
+            popupWindow = new PopupWindow(view, ((RelativeLayout)parent.getParent()).getMeasuredWidth(), 200);
         }
 
         // 使其聚集
@@ -429,7 +450,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 - popupWindow.getWidth() / 2;
         Log.i("coder", "xPos:" + xPos);
 
-        popupWindow.showAsDropDown(parent, xPos, 0);
+        popupWindow.showAsDropDown(parent, xPos, -(int) ((RelativeLayout) parent.getParent()).getHeight());
 
         lv_group.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -440,13 +461,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(MainActivity.getInstance(),
                         ContactsMgr.getInstance().getGroups().get(position).GetGName(), Toast.LENGTH_SHORT)
                         .show();
-                Log.d("group", "group = "+position + " id = " + id);
+                Log.d("group", "group = " + position + " id = " + id);
 
                 if (popupWindow != null) {
                     popupWindow.dismiss();
                 }
 
                 GroupActivity.startActivity(MainActivity.getInstance(), position);
+            }
+        });
+
+        button_addGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("group", "addgroup");
+
+//                if (popupWindow != null) {
+//                    popupWindow.dismiss();
+//                }
+
+//                GroupActivity.startActivity(MainActivity.getInstance(), -1);
             }
         });
     }

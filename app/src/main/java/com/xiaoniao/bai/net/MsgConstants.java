@@ -13,6 +13,8 @@ public class MsgConstants {
     public final static int MsgSendError = MsgSeg + 1;
     public final static int MsgYao = MsgSeg + 10;
     public final static int MsgYaoMatch = MsgSeg + 11;
+    public final static int MsgBroadcast = MsgSeg + 12;
+    public final static int MsgBroadcastRcv = MsgSeg + 13;
 
     public final static String MsgId = "MsgId";
     public final static String MsgBody = "MsgBody";

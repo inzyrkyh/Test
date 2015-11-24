@@ -1,5 +1,6 @@
 package com.xiaoniao.bai.utils;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiInfo;
@@ -14,7 +15,7 @@ public class Utils {
     public static boolean isNetStateOK(Context context){
         ConnectivityManager connMgr = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if( connMgr.getActiveNetworkInfo()!=null ){
-            if( connMgr.getActiveNetworkInfo().isAvailable()==true )
+            if( connMgr.getActiveNetworkInfo().isAvailable() )
                 return true;
         }
         return false;
@@ -32,6 +33,13 @@ public class Utils {
         if( Min < 0 || Max < Min )
             return AppConstants.iRetError;
         return new java.util.Random().nextInt(Max-Min+1)+Min;
+    }
+    public boolean IsRunningActivity(Context context,String activityName){
+        ActivityManager activityManager=(ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        String runningActivity=activityManager.getRunningTasks(1).get(0).topActivity.getClassName();
+        if( runningActivity.equals(activityName) )
+            return true;
+        return false;
     }
     public static long GetCurSecondTime(){
         return Calendar.getInstance().getTimeInMillis()/1000;

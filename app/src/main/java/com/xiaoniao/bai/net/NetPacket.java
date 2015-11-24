@@ -1,13 +1,7 @@
 package com.xiaoniao.bai.net;
 
-import android.util.Log;
-
 import com.test.test.CardActivity;
-import com.test.test.Model.ContactsMgr;
-import com.xiaoniao.bai.utils.JsonTools;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.test.test.MainActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +17,7 @@ public class NetPacket {
         String msgBody;
     }
     private InfoReturnT mInfo = null;
+    private boolean mbRecvBroadcast = false;
     private Map<String,String> packets = new HashMap<>();
     private ArrayList<String> mSendPackets = new ArrayList<>();// mem leak
     private static NetPacket me = null;
@@ -36,6 +31,25 @@ public class NetPacket {
     }
     public void Init(){
 
+    }
+    public void startRcvBroadcast(){
+        mbRecvBroadcast = true;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (mbRecvBroadcast){
+                    AddSendPacket(BaiMsg.getInstance().CreateMsgBroadcastRcv());
+                    try {
+                        Thread.sleep(4200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
+    public void stopRcvBroadcast(){
+        mbRecvBroadcast = false;
     }
     private void parse(String info){
         if( mInfo == null )
@@ -61,20 +75,45 @@ public class NetPacket {
         parse(info);
         if( mInfo.feedback == MsgConstants.MsgYao ){
             mRepeatSendMsg4 = 0;
-            NetPacket.getInstance().AddSendPacket(BaiMsg.getInstance().CreateMsgYaoMatch());
+            AddSendPacket(BaiMsg.getInstance().CreateMsgYaoMatch());
         }
         else if( mInfo.feedback == MsgConstants.MsgYaoMatch ){
             if( mInfo.msgId == MsgConstants.MsgSendError ) {
                 if (mRepeatSendMsg4 < mRepeatCount) {
-                    NetPacket.getInstance().AddSendPacket(BaiMsg.getInstance().CreateMsgYaoMatch());
+                    AddSendPacket(BaiMsg.getInstance().CreateMsgYaoMatch());
                     mRepeatSendMsg4 += 1;
                 }
             }
             else if( mInfo.msgId == MsgConstants.MsgSendOk )
                 CardActivity.GetInstance().updateUI(mInfo.msgBody);
         }
+        else if( mInfo.feedback == MsgConstants.MsgBroadcastRcv ){
+            if( mInfo.msgId == MsgConstants.MsgSendOk ) {
+                MainActivity.getInstance().showCard(mInfo.msgBody);
+            }
+        }
     }
-    public void process(String info){
+    public synchronized void AddSendPacket(String packet){
+        mSendPackets.add(packet);
+    }
+    public synchronized String GetSendPacket(){
+        if( mSendPackets.size() <= 0 )
+            return null;
+        String packet = mSendPackets.get(0);
+        if (packet!=null)
+            mSendPackets.remove(0);
+        return packet;
+    }
+    public int GetSendSize(){
+        return mSendPackets.size();
+    }
+/*    public String UsePacket(String key){
+        String s = packets.get(key);
+        if( s!= null )
+            packets.remove(key);
+        return s;
+    }*/
+/*    public void process(String info){
         if( info==null || info=="")
             return;
         try {
@@ -124,25 +163,5 @@ public class NetPacket {
         } catch (JSONException e) {
             Log.i("MyLog", "process error:" + e.getMessage());
         }
-    }
-    public String UsePacket(String key){
-        String s = packets.get(key);
-        if( s!= null )
-            packets.remove(key);
-        return s;
-    }
-    public synchronized void AddSendPacket(String packet){
-        mSendPackets.add(packet);
-    }
-    public synchronized String GetSendPacket(){
-        if( mSendPackets.size() <= 0 )
-            return null;
-        String packet = mSendPackets.get(0);
-        if (packet!=null)
-            mSendPackets.remove(0);
-        return packet;
-    }
-    public int GetSendSize(){
-        return mSendPackets.size();
-    }
+    }*/
 }
