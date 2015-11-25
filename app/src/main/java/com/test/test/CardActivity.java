@@ -33,7 +33,6 @@ public class CardActivity extends AppCompatActivity {
     private int enterFromListPosition;
     private ShakeListener mShake;
     private SensorManager mSensorManager;
-    private CardStackFragment mStackFragment;
     private int mPage = -1;
 
     public static void startActivity(Context lastContext, int position) {
@@ -154,8 +153,9 @@ public class CardActivity extends AppCompatActivity {
         MainActivity.getInstance().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
     }
     public void updateUI(String s){
-        if( s!=null && s!="" && mStackFragment!=null ) {
-            mStackFragment.updateUI(s);
+        if( s!=null && s!="" ) {
+            CardStackFragment fragment = (CardStackFragment)mViewPagerFragments.get(mPage);
+            fragment.updateUI(s);
             UninstallListener();
         }
     }
