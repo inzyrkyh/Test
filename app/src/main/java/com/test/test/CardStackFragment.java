@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,10 +34,9 @@ public class CardStackFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private int mPage;
+    //private String mParam2;
     private TextView mtextViewName;
 
     FrameLayout mMainLayout;
@@ -44,6 +44,8 @@ public class CardStackFragment extends Fragment {
     Card card;
 
     Button button_phone_call;
+    private ImageView mImgView;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -71,25 +73,26 @@ public class CardStackFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mPage = Integer.valueOf( getArguments().getString(ARG_PARAM1));
+            //mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_card, container, false);
-        Bundle bdl = getArguments();
-//        mMainLayout = (FrameLayout) v.findViewById(R.id.main_layout);
+        View v = null;
+        if( mPage == 0 )
+            v = inflater.inflate(R.layout.fragment_card, container, false);
+        else
+            v = inflater.inflate(R.layout.fragment_card2, container, false);
+        mImgView = (ImageView)v.findViewById(R.id.card);
         mtextViewName = (TextView) v.findViewById(R.id.fragment_card_name);
         mtextViewName.setText(card.getName());
         button_phone_call = (Button) v.findViewById(R.id.button_phone_call);
         button_phone_call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("button", "phone call clicked" + card.getPhoneNumber());
-                //            phone call
                 Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + (card).getPhoneNumber()));
                 startActivity(intent);
             }
@@ -98,8 +101,13 @@ public class CardStackFragment extends Fragment {
         return v;
     }
     public void updateUI(String str){
-        if(str!=null && str!="" && mtextViewName!=null)
-            mtextViewName.setText(str);
+        if(str!=null && str!="" && mtextViewName!=null) {
+            String[] strings = str.split("#");
+            mtextViewName.setText(strings[0]);
+            if( Integer.valueOf(strings[1]) == 0 )
+               mImgView.setImageResource(R.drawable.i_mingpian002);
+            else //if( Integer.valueOf(strings[1]) == 1 )
+                mImgView.setImageResource(R.drawable.i_mingpian004);
+        }
     }
-
 }

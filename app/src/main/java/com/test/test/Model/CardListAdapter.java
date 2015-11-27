@@ -155,11 +155,18 @@ public class CardListAdapter extends ArrayAdapter<Card> {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 //                mCheckedState[position] = isChecked;
+                Group currentGroup = ContactsMgr.getInstance().getAGroup(GroupActivity.iCurGroupId);
                 if (isChecked) {
-                    getItem(position).AddToGroup(GroupActivity.currentGroup);
+                    if( currentGroup == null )
+                        ContactsMgr.getInstance().AddToTemp(position,getItem(position));
+                    else
+                         getItem(position).AddToGroup(currentGroup);
                 }
                 else {
-                    getItem(position).DeleteFromGroup(GroupActivity.currentGroup);
+                    if( currentGroup == null )
+                        ContactsMgr.getInstance().DeleteFromTemp(position);
+                    else
+                        getItem(position).DeleteFromGroup(currentGroup);
                 }
             }
         });
@@ -177,8 +184,9 @@ public class CardListAdapter extends ArrayAdapter<Card> {
 //            View wantedView = (parent).getChildAt(wantedChild);
 //            ((CheckBox)wantedView.findViewById(R.id.id_card_item_checkbox)).setChecked(getItem(position).IsInAGroup(GroupActivity.currentGroup.GetGId()));
 //        }
-        if (GroupActivity.currentGroup != null) {
-            holder.cb.setChecked(getItem(position).IsInAGroup(GroupActivity.currentGroup.GetGId()));
+        Group currentGroup = ContactsMgr.getInstance().getAGroup(GroupActivity.iCurGroupId);
+        if (currentGroup != null) {
+            holder.cb.setChecked(getItem(position).IsInAGroup(currentGroup.GetGId()));
         }
 
         return convertView;

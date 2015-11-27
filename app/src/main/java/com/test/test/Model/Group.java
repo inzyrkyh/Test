@@ -9,8 +9,12 @@ public class Group {
     private int GId;
     private String GName;
     public Group(){
-        GId = 0;
-        GName = "";
+        SetGId(0);
+        SetGName("");
+    }
+    public Group(int groupId,String name){
+        SetGId(groupId);
+        SetGName(name);
     }
     public int GetGId(){ return GId; }
     public void SetGId(int gid){ GId = gid; }

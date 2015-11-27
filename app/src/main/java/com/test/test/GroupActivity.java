@@ -27,8 +27,7 @@ import com.test.test.Model.Group;
 import java.util.ArrayList;
 
 public class GroupActivity extends AppCompatActivity {
-
-    public static Group currentGroup;
+    public static int iCurGroupId;
     private boolean isGroupEditable;
     private boolean isGroupTitleEditable;
 
@@ -69,27 +68,22 @@ public class GroupActivity extends AppCompatActivity {
 //        });
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
                 | ActionBar.DISPLAY_SHOW_HOME);
-        int index = getIntent().getIntExtra("groupIndex", 0);
+        iCurGroupId = getIntent().getIntExtra("groupIndex", 0);
         //test
-        if (index != -1) {
-            currentGroup = ContactsMgr.getInstance().getGroups().get(index);
-//        currentGroup = ContactsMgr.getInstance().newGroup("Friends");
+        if (iCurGroupId != ContactsMgr.Gnew) {
+            iCurGroupId = ContactsMgr.getInstance().getGroups().get(iCurGroupId).GetGId();
+            Group currentGroup = ContactsMgr.getInstance().getAGroup(iCurGroupId);
             setTitle(currentGroup.GetGName());
             titleText.setText(currentGroup.GetGName());
             titleText.setEnabled(false);
-        } else {
-//            currentGroup = ContactsMgr.getInstance().getGroups().get(index);
-            currentGroup = ContactsMgr.getInstance().newGroup("");
-            setTitle(currentGroup.GetGName());
+            groupList = ContactsMgr.getInstance().GetCards(iCurGroupId);
         }
-//        getActionBar().setHomeButtonEnabled(true);
-//        getActionBar().setDisplayHomeAsUpEnabled(true);
-
+        else {
+            groupList = new ArrayList<>();
+            ContactsMgr.getInstance().ClearTemp();
+        }
         swipeListView = (SwipeListView) findViewById(R.id.id_group_swipelistview);
-
-        groupList = ContactsMgr.getInstance().GetCards(currentGroup.GetGId());
         groupAdapter = new CardListAdapter(this, R.layout.card_item, groupList);
-
 
         if (groupList.size() == 0) {
             MainActivity.adapter.setShowCheckBox(true);
@@ -125,7 +119,7 @@ public class GroupActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_rename:
-                Toast.makeText(this, "rename", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "rename", Toast.LENGTH_SHORT).show();
                 isGroupTitleEditable = !isGroupTitleEditable;
                 if (isGroupTitleEditable) {
                     titleText.setEnabled(true);
@@ -136,14 +130,12 @@ public class GroupActivity extends AppCompatActivity {
                         isGroupTitleEditable = true;
                     }
                     else {
-                        for (Group group: ContactsMgr.getInstance().getGroups()) {
-                            if(group.GetGName() == titleText.getText().toString() && group.GetGId() != currentGroup.GetGId()) {
-                                Toast.makeText(this, "分组名不能重复", Toast.LENGTH_SHORT).show();
-                                isGroupTitleEditable = true;
-                                return true;
-                            }
+                        if( ContactsMgr.getInstance().getAGroup(titleText.getText().toString()) !=null ){
+                            Toast.makeText(this, "分组名不能重复", Toast.LENGTH_SHORT).show();
+                            isGroupTitleEditable = true;
+                            return true;
                         }
-                        currentGroup.SetGName(titleText.getText().toString());
+                        ContactsMgr.getInstance().getAGroup(iCurGroupId).SetGName(titleText.getText().toString());
                     }
                 }
                 return true;
@@ -154,15 +146,34 @@ public class GroupActivity extends AppCompatActivity {
                     swipeListView.setAdapter(MainActivity.adapter);
                     swipeListView.setSwipeMode(SwipeListView.SWIPE_MODE_NONE);
                 } else {
-                    groupList = ContactsMgr.getInstance().GetCards(currentGroup.GetGId());
-                    if (titleText.getText().toString().equals("")) {
-                        Toast.makeText(this, "分组名不能为空", Toast.LENGTH_SHORT).show();
+                    String groupName = titleText.getText().toString();
+                    if (groupName.equals("") ) {
+                        Toast.makeText(this, "分组名空", Toast.LENGTH_SHORT).show();
                         isGroupEditable = true;
-                    } else if (groupList.size() == 0) {
+                        return true;
+                    }
+                    if( iCurGroupId != ContactsMgr.Gnew )
+                        groupList = ContactsMgr.getInstance().GetCards(iCurGroupId);
+                    else{
+                        if (ContactsMgr.getInstance().getAGroup(groupName)!=null) {
+                            Toast.makeText(this, "分组名重复", Toast.LENGTH_SHORT).show();
+                            isGroupEditable = true;
+                            return true;
+                        }
+                        if( ContactsMgr.getInstance().GetTempSize() > 0 ){
+                            groupList = ContactsMgr.getInstance().GetTempAll();
+                            ContactsMgr.getInstance().ClearTemp();
+                        }
+                    }
+                    if ( groupList == null || groupList.size() == 0 ) {
                         Toast.makeText(this, "必须至少选中一个联系人", Toast.LENGTH_SHORT).show();
                         isGroupEditable = true;
                     } else {
-                        currentGroup.SetGName(titleText.getText().toString());
+                        if( iCurGroupId == ContactsMgr.Gnew ) {
+                            Group currentGroup = ContactsMgr.getInstance().newGroup(groupName);
+                            for (Card card : groupList)
+                                card.AddToGroup(currentGroup);
+                        }
                         groupAdapter = new CardListAdapter(this, R.layout.card_item, groupList);
                         MainActivity.adapter.setShowCheckBox(false);
                         swipeListView.setAdapter(groupAdapter);

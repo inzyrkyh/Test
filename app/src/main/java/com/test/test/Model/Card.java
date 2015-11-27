@@ -16,17 +16,20 @@ public class Card {
     private String sortKey;
 
     public Card() {
-        name = "";
-        phoneNumber = "";
+        setName("");
+        setPhoneNumber("");
         InitDefaultGroup();
     }
-
+    public Card(Card card) { // error
+        setName(card.getName());
+        setPhoneNumber(card.getPhoneNumber());
+        //InitDefaultGroup();
+    }
     public Card(String name, String phoneNumber) {
-        this.name = name;
-        this.phoneNumber = phoneNumber;
+        setName(name);
+        setPhoneNumber(phoneNumber);
         InitDefaultGroup();
     }
-
     public void AddOtherCard(Card card){
         if( others == null )
             others = new ArrayList<>();
@@ -46,11 +49,7 @@ public class Card {
         return others.size();
     }
     private void InitDefaultGroup(){
-        Group group = new Group();
-        group.SetGId(ContactsMgr.GAll);
-        group.SetGName("所有人");
-        ContactsMgr.getInstance().addGroup(group);
-        this.AddToGroup(group);
+        this.AddToGroup(ContactsMgr.getInstance().getAGroup(ContactsMgr.GAll));
     }
     public void setName(String name) {
         this.name = name;
@@ -97,15 +96,14 @@ public class Card {
     }
     // group op
     public void AddToGroup(Group group){
-        if( group.GetGId() > ContactsMgr.GStart+ContactsMgr.getInstance().GetGroupCount() )
+        if( group == null || ContactsMgr.getInstance().getAGroup(group.GetGName())==null )
             return;
         mGroups.put(group.GetGId(),group);
     }
     public void DeleteFromGroup(Group group){
-        if( group.GetGId() > ContactsMgr.GStart+ContactsMgr.getInstance().GetGroupCount() )
+        if( group == null || ContactsMgr.getInstance().getAGroup(group.GetGName())==null )
             return;
-        //if( mGroups.get(group.GetGId()) == null )
-            mGroups.remove(group.GetGId());
+        mGroups.remove(group.GetGId());
     }
     public boolean IsInAGroup(int gId){
         for( HashMap.Entry<Integer,Group> entry : mGroups.entrySet() ){

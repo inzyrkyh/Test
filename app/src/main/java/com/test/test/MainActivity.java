@@ -95,81 +95,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                //暂定导入通讯录
-//                ContactsHelper.fetchAllContacts(getInstance());
-//                ContactsHelper.removeDuplicate(dataList);
-//                adapter.notifyDataSetChanged();
-                //test http request
-                // Create a new HttpClient and Post Header
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        HttpClient httpclient = new DefaultHttpClient();
-//                        HttpPost httppost = new HttpPost("http://42.96.138.5/cgi-bin/hello.cgi");
-//
-//                        try {
-//                            // Add your data
-//                            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-//                            nameValuePairs.add(new BasicNameValuePair("id", "12345"));
-//                            nameValuePairs.add(new BasicNameValuePair("stringdata", "AndDev is Cool!"));
-//                            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-//
-//                            // Execute HTTP Post Request
-//                            HttpResponse response = httpclient.execute(httppost);
-//
-//                        } catch (ClientProtocolException e) {
-//                            // TODO Auto-generated catch block
-//                        } catch (IOException e) {
-//                            // TODO Auto-generated catch block
-//                        }
-//                    }
-//                });
-                // Instantiate the RequestQueue.
-                /** async task about send request
-                RequestQueue queue = Volley.newRequestQueue(MainActivity.getInstance());
-                String url = "http://42.96.138.5:8080/cgi-bin/hello.cgi";
-//                String url = "http://"+"www.baidu.com";
 
-// Request a string response from the provided URL.
-//                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-//                        new Response.Listener<String>() {
-//                            @Override
-//                            public void onResponse(String response) {
-//                                // Display the first 500 characters of the response string.
-//                                Log.d("Http", "Response is: "+ response.substring(0));
-//                            }
-//                        }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-////                        mTextView.setText("That didn't work!");
-//                        Log.d("HTTP", error.networkResponse.data.toString());
-//                    }
-//                });
-
-                //JSON request
-                HashMap<String, String> params = new HashMap<String, String>();
-                params.put("token", "AbCdEfGh123456");
-                params.put("test", "test123");
-                final JSONObject jsonBody = new JSONObject(params);
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, jsonBody, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("Http", response.toString());
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("Http", error.networkResponse.data.toString());
-                    }
-                });
-// Add the request to the RequestQueue.
-                queue.add(jsonObjectRequest);
-                 */
             }
         });
-
         fab.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -431,12 +359,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             lv_group = (HorizontalListView) view.findViewById(R.id.id_group_listview);
             // 加载数据
 
-            GroupAdapter groupAdapter = new GroupAdapter(this, ContactsMgr.getInstance().getGroups());
-            lv_group.setAdapter(groupAdapter);
+
             // 创建一个PopuWidow对象
             popupWindow = new PopupWindow(view, ((RelativeLayout)parent.getParent()).getMeasuredWidth(), 200);
         }
-
+        GroupAdapter groupAdapter = new GroupAdapter(this, ContactsMgr.getInstance().getGroups());
+        lv_group.setAdapter(groupAdapter);
         // 使其聚集
         popupWindow.setFocusable(true);
         // 设置允许在外点击消失
@@ -457,12 +385,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view,
                                     int position, long id) {
-
-                Toast.makeText(MainActivity.getInstance(),
-                        ContactsMgr.getInstance().getGroups().get(position).GetGName(), Toast.LENGTH_SHORT)
-                        .show();
-                Log.d("group", "group = " + position + " id = " + id);
-
                 if (popupWindow != null) {
                     popupWindow.dismiss();
                 }
@@ -480,7 +402,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     popupWindow.dismiss();
                 }
 
-                GroupActivity.startActivity(MainActivity.getInstance(), -1);
+                GroupActivity.startActivity(MainActivity.getInstance(), ContactsMgr.Gnew);
             }
         });
     }
