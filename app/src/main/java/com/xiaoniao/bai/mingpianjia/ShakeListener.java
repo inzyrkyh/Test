@@ -16,7 +16,7 @@ import com.xiaoniao.bai.utils.Utils;
 public class ShakeListener implements SensorEventListener {
     private Activity mContext;
     private final static int mShakevalue = 15;
-    private final static long mShakeTimeInterval = 3000;
+    private final static long mShakeTimeInterval = 5000;
     private long mShakeLastTime;
     Vibrator vibrator = null; 
   
@@ -24,7 +24,7 @@ public class ShakeListener implements SensorEventListener {
         super();  
         this.mContext = context;
         vibrator = (Vibrator) mContext.getSystemService(Service.VIBRATOR_SERVICE);
-        mShakeLastTime = Utils.GetCurTimeInMillis();
+        mShakeLastTime = Utils.GetCurTimeInMillis()-3500;
     }
     private boolean IsCanShakeAgain(){
         if( !Utils.isNetStateOK(mContext) )

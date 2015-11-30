@@ -18,10 +18,10 @@ public class NetPacket {
     }
     private InfoReturnT mInfo = null;
     private boolean mbRecvBroadcast = false;
-    private Map<String,String> packets = new HashMap<>();
+    //private Map<String,String> packets = new HashMap<>();
     private ArrayList<String> mSendPackets = new ArrayList<>();// mem leak
     private static NetPacket me = null;
-    private static final int mRepeatCount = 6;
+    private static final int mRepeatCount = 50;
     private static int mRepeatSendMsg4 = 0;
     private NetPacket(){}
     public static NetPacket getInstance(){
@@ -74,12 +74,16 @@ public class NetPacket {
         //packets.put(AppConstants.NetGetKey,info);
         parse(info);
         if( mInfo.feedback == MsgConstants.MsgYao ){
-            mRepeatSendMsg4 = 0;
-            AddSendPacket(BaiMsg.getInstance().CreateMsgYaoMatch());
+            if( mInfo.msgId == MsgConstants.MsgSendError ) {
+                mRepeatSendMsg4 = 0;
+                AddSendPacket(BaiMsg.getInstance().CreateMsgYaoMatch());
+            }
+            else if( mInfo.msgId == MsgConstants.MsgSendOk )
+                CardActivity.GetInstance().updateUI(mInfo.msgBody);
         }
         else if( mInfo.feedback == MsgConstants.MsgYaoMatch ){
             if( mInfo.msgId == MsgConstants.MsgSendError ) {
-                if (mRepeatSendMsg4 < mRepeatCount) {
+                if ( !mInfo.msgBody.equals(MsgConstants.MsgTimeOut) && mRepeatSendMsg4 < mRepeatCount) {
                     AddSendPacket(BaiMsg.getInstance().CreateMsgYaoMatch());
                     mRepeatSendMsg4 += 1;
                 }

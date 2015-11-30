@@ -21,4 +21,5 @@ public class MsgConstants {
     public final static String MacAddr = "MacAddr";
     public final static String FeedBack = "FeedBack";
     public final static String MsgNull = "MsgNull";
+    public final static String MsgTimeOut = "MsgTimeOut";
 }
